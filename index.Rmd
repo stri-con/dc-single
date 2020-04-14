@@ -1,11 +1,11 @@
 ---
-title: "[Lesson 2: Practicals Page](https://github.com/stri-con/dc-single/blob/master/index.Rmd)"
+title: "[Lesson 2: Your Practical Page](https://github.com/stri-con/dc-single/blob/master/index.Rmd)"
 author: "by Jarrod"
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 smart: true
 output:
   html_document:
-    theme: paper
+    theme: journal
     toc: true
     toc_float: true
     toc_depth: 3
@@ -122,4 +122,4 @@ You last task is to modify the YAML header to suit your needs and tastes. I woul
 
 ### The End
 
-...of Assignment 1 that is. These exercises should give you an idea of some techniques you can use to tweak the behavior of your document. In Assignment 2 
+...of Assignment 1 that is. These exercises should give you an idea of some techniques you can use to tweak the behavior of your document. Assignment 2 will be similar in structure and released in a day or so. More on that soon. 
