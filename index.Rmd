@@ -17,29 +17,33 @@ output:
 #    toc: TRUE
 #    number_sections: FALSE
 #    code_folding: "show"
-editor_options: 
+editor_options:
   chunk_output_type: inline
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+set.seed(911)
 library(knitr)
 library(epuRate)
+library(kableExtra)
+library(rmarkdown)
+library(DT)
 ```
 
 ## Overview
 
-Welcome to the hands-on, practical learning portion of [Lesson 2](https://stri-con.github.io/data-curation/2020/04/09/lesson-2/) where you will create a single page R Markdown document. I made this page to help guide you in the process. The material below contains a series of assignments and challenges designed to get you comfortable utilizing [YAML metadata](https://stri-con.github.io/data-curation/2020/04/09/lesson-2/#the-yaml-header-1), [Markdown syntax](https://stri-con.github.io/data-curation/2020/04/09/lesson-2/#markdown-formatted-text-1), and [R code chunks](https://stri-con.github.io/data-curation/2020/04/09/lesson-2/#r-code-chunks-1). 
+Welcome to the hands-on, practical learning portion of [Lesson 2](https://stri-con.github.io/data-curation/2020/04/09/lesson-2/) where you will create a single page R Markdown document. I made this page to help guide you in the process. The material below contains a series of assignments and challenges designed to get you comfortable utilizing [YAML metadata](https://stri-con.github.io/data-curation/2020/04/09/lesson-2/#the-yaml-header-1), [Markdown syntax](https://stri-con.github.io/data-curation/2020/04/09/lesson-2/#markdown-formatted-text-1), and [R code chunks](https://stri-con.github.io/data-curation/2020/04/09/lesson-2/#r-code-chunks-1).
 
 The page itself is written almost entirely in R Markdown, meaning there is no extensive use of anything fancy like complicated  CSS or HTML. I will introduce some simple HTML code you can use to jazz up your document a little. You should be able to solve any problem I present by digging around in the raw code on GitHub, consulting the [Resources page](https://stri-con.github.io/data-curation/page/resources/), using one of the targeted search strategies described in the [Problem Solving post](https://stri-con.github.io/data-curation/2020/04/03/help/), and/or posting a question to the Slack channel.
 
 ## Some Keys to Success
 
-> **Knit often**. Whenever you make a change to the YAML header, add a new code chunk, etc., re-knit (or render) your document. This is very important. Regular knitting allows you to **a**) see the effects of a change and **b**) track down (troubleshoot) issues more easily. 
+> **Knit often**. Whenever you make a change to the YAML header, add a new code chunk, etc., re-knit (or render) your document. This is very important. Regular knitting allows you to **a**) see the effects of a change and **b**) track down (troubleshoot) issues more easily.
 >
-> Simply hit the knit button or use the shortcut keys---on MacOS `Cmd`+`Shift`+`K` and Windows `Ctrl`+`Shift`+`K`. Learn to love these shortcut keys. They will save you time. 
+> Simply hit the knit button or use the shortcut keys---on MacOS `Cmd`+`Shift`+`K` and Windows `Ctrl`+`Shift`+`K`. Learn to love these shortcut keys. They will save you time.
 
-You can choose how your document is previewed using the dropdown menu in the document settings. `Preview in Window` opens the document in a separate RStudio window and `Preview in Viewer Pane` lets you see the document in the main RStudio IDE. These are good for *quick* looks. You should **always** double-check the actual HTML file because sometimes things look different in RStudio. 
+You can choose how your document is previewed using the dropdown menu in the document settings. `Preview in Window` opens the document in a separate RStudio window and `Preview in Viewer Pane` lets you see the document in the main RStudio IDE. These are good for *quick* looks. You should **always** double-check the actual HTML file because sometimes things look different in RStudio.
 <br/>
 
 ![](files/preview.png)
@@ -52,7 +56,7 @@ In the first assignment, you will employ some basic techniques to control the lo
 
 ### 1.1 Make a Document
 
-If you have not already done so, your first task is to create an R Markdown document. Open R Studio and go to `File > New File > R Markdown`. A window should pop up where you can fill in the details. It is not important what you put here since you can change it at any time. What is important is that **Document** and **HTML** are both selected. We will cover other document types in the future. Hit `Ok` and follow the steps in this graphic. Remember, you do not need to add a file extension when you save the document. 
+If you have not already done so, your first task is to create an R Markdown document. Open R Studio and go to `File > New File > R Markdown`. A window should pop up where you can fill in the details. It is not important what you put here since you can change it at any time. What is important is that **Document** and **HTML** are both selected. We will cover other document types in the future. Hit `Ok` and follow the steps in this graphic. Remember, you do not need to add a file extension when you save the document.
 
 <br/>
 
@@ -62,23 +66,23 @@ include_graphics("files/make-rmd.gif")
 
 <br/>
 
-Once you have a document built and saved, there should be a `.html` file in your working directory. Double-click that file---it should open in your default browser. Each time you re-knit the `.Rmd` file, you can just refresh the browser page or double-click the file again. 
+Once you have a document built and saved, there should be a `.html` file in your working directory. Double-click that file---it should open in your default browser. Each time you re-knit the `.Rmd` file, you can just refresh the browser page or double-click the file again.
 
 ### 1.2 Add Markdown Text
 
-Your first task is to add some content and format the content with Markdown. This doesn't need to be anything fancy to start. You can either add text as you go or paste a large amount of text in at once. Dealers choice. You can use the [Markdown](https://stri-con.github.io/data-curation/2020/03/28/lesson-0/#markdown-3) section of Lesson 0 or the [Markdown](https://stri-con.github.io/data-curation/page/resources/#markdown) section from the Resources page for reference. 
+Your first task is to add some content and format the content with Markdown. This doesn't need to be anything fancy to start. You can either add text as you go or paste a large amount of text in at once. Dealers choice. You can use the [Markdown](https://stri-con.github.io/data-curation/2020/03/28/lesson-0/#markdown-3) section of Lesson 0 or the [Markdown](https://stri-con.github.io/data-curation/page/resources/#markdown) section from the Resources page for reference.
 
 1) Add headers to give the document structure. Use different header levels.
 2) Add hyperlinks. We will learn about *internal* links later. For now, just link to outside websites.
-3) Add emphasis formatting like bold, italics, and block text. 
-4) Mix and match formatting, like make a hyperlink bold or add italics to block text. 
-5) Make a list of items. 
+3) Add emphasis formatting like bold, italics, and block text.
+4) Mix and match formatting, like make a hyperlink bold or add italics to block text.
+5) Make a list of items.
 
 ### 1.3 Modify & Test R Code Chunks
 
-Now it is time to get some practice modifying code chunk options so you can gain more control over the behavior of code and result display. If you have your own R code you are more than welcome to use it here. I will use the default code chunks that were added to the `.Rmd` file. Please see the section on [Chunk structure & options](https://stri-con.github.io/data-curation/2020/04/09/lesson-2/#chunk-structure-options-1) from Lesson 2 for more details. 
+Now it is time to get some practice modifying code chunk options so you can gain more control over the behavior of code and result display. If you have your own R code you are more than welcome to use it here. I will use the default code chunks that were added to the `.Rmd` file. Please see the section on [Chunk structure & options](https://stri-con.github.io/data-curation/2020/04/09/lesson-2/#chunk-structure-options-1) from Lesson 2 for more details.
 
-Here are the two default code chunks. As you can see, both have names and the second chunk has a single option. 
+Here are the two default code chunks. As you can see, both have names and the second chunk has a single option.
 
 ````
 ```{r cars}`r ''`
@@ -92,7 +96,7 @@ plot(pressure)
 ```
 ````
 
-There are many code chunk options you can control. Which options you use and how you set them will be determined by your needs. Test the behavior of the following options by setting each equal to either `TRUE` or `FALSE`. Render the document and see if you can figure out what changed. Each of these has a default value so you may not see a change until you set the alternative value. 
+There are many code chunk options you can control. Which options you use and how you set them will be determined by your needs. Test the behavior of the following options by setting each equal to either `TRUE` or `FALSE`. Render the document and see if you can figure out what changed. Each of these has a default value so you may not see a change until you set the alternative value.
 
 1) `echo`
 2) `collapse`
@@ -101,25 +105,251 @@ There are many code chunk options you can control. Which options you use and how
 5) `highlight`
 6) `include`
 
-Next, it is a really good habit to check code chunks as you add them. This will ensure that each chunk works, making it easier to track down problems. If you refer to the first image on this page, you can you have options for **Chunk Output**---*Inline* and *Console*. This controls where the output is displayed. Let's take a quick look at a code chunk in RStudio and see how you test chunks before rendering. 
+Next, it is a really good habit to check code chunks as you add them. This will ensure that each chunk works, making it easier to track down problems. If you refer to the first image on this page, you can you have options for **Chunk Output**---*Inline* and *Console*. This controls where the output is displayed. Let's take a quick look at a code chunk in RStudio and see how you test chunks before rendering.
 
 ![](files/run-chunk.png)
 
-Take a look at the tool bar on the far right. **Option 1** is a dropdown menu that gives you an alternative way to set code chunk options. **Option 2** will *Run all Code Chunks Above* meaning that RStudio will run all code chunks above the current chunk but not the current chunk itself. And **Option 3** will *Run the Current Chunk*. Incidentally, if you do not see these options it means something is wrong with the chunk. 
+Take a look at the tool bar on the far right. **Option 1** is a dropdown menu that gives you an alternative way to set code chunk options. **Option 2** will *Run all Code Chunks Above* meaning that RStudio will run all code chunks above the current chunk but not the current chunk itself. And **Option 3** will *Run the Current Chunk*. Incidentally, if you do not see these options it means something is wrong with the chunk.
 
-Go ahead and run the chunk. 
+Go ahead and run the chunk.
 
 ### 1.4 Modify YAML Metadata
 
-You last task is to modify the YAML header to suit your needs and tastes. I would like you to experiment with different options and settings to see what happens in the final document. 
+You last task is to modify the YAML header to suit your needs and tastes. I would like you to experiment with different options and settings to see what happens in the final document.
 
 1) Run `?rmarkdown::html_document` or `?html_document` in the Console to see the header options for an HTML document.
 2) Add a table of contents and include options that modify the behavior of the table of contents.
-3) Add the option to keep the Markdown document. This will save a `.md` copy of your file. 
+3) Add the option to keep the Markdown document. This will save a `.md` copy of your file.
 4) Open the `.md` file in a text editor. This is the output from `knitr`---after all R code has been processed---and what PanDoc uses to generate an HTML file. Keep this file open as you build your document. Pay attention to how your R code is converted to Markdown syntax.
 5) Change the theme. Options are listed on the *Convert to an HTML document* help page you opened in RStudio. Try a few options and see what happens.
 6) Change the code highlight option. These too are listed on the help page. Try a few options and see what happens.
 
-### The End
+## Assignment 2: Tables
 
-...of Assignment 1 that is. These exercises should give you an idea of some techniques you can use to tweak the behavior of your document. Assignment 2 will be similar in structure and released in a day or so. More on that soon. 
+In this assignment, you will explore different methods of incorporating tables in your document. The choice of method depends on **a**) the type of data, **b**) the amount of data, and **c**) the desired output. I will cover a few tools for creating tables but please note there are many options out there, so look around and let us know if you find a tool you like.
+
+For each example, I will use the `mtcars` dataset from the `datasets` package. The `mtcars` dataset has `r nrow(mtcars)` rows and `r ncol(mtcars)` columns. Feel free to load your own data table or use the `mtcars` dataset.
+
+### Tools
+
+You will use four different tools in this assignment for making tables. Here is a summary table of of each tool. 
+
+| Table type                    | Table size       |  Formatting  | Skill Level      |
+|-------------------------------|:----------------:|:------------:|:----------------:|
+| `markdown`                    | small            | minimal      | beginner         |
+| `rmarkdown::paged_table`      | large            | minimal      | beginner         |
+| `knitr::kable` + `kableExtra` | small            | extensive    | intermediate     |
+| `DT` + `DataTables`           | large            | extensive    | advanced         |
+Table: *Table types and recommended uses.*
+
+<br/>
+
+### 2.1 Markdown
+
+The simplest method of building a table is with Markdown syntax. This is a nice option because you can hard code the table right into the document---no need to install and load libraries or write code chunks---and it is easy to implement. The downside is there is minimal functionality available in a Markdown table.
+
+Markdown does not work well for large tables. So I will first grab a subset of `mtcars`, specifically the firt 4 rows and 3 columns. In my code chunk I add the chunk option `comment=""`. This prevents Knitr from appending a string (default is `##`) to the start of each line of results in the final document.
+
+```{r mtcars_sub, comment=""}
+mtcars_sub <- mtcars[1:4,1:3]
+mtcars_sub
+```
+
+<br/>
+
+*Incidentally, the rsults box above is technically the simplest table you can make, either by calling the data frame `mtcars_sub` directly or running `print.data.frame(mtcars_sub)`.*
+
+Anyway, run this code chunk, copy the results, and make a Markdown table. You can either run the chunk in RStudio without rendering the document (described above) or render the document and copy the results from HTML page. I added a header to the first column. And here is the Markdown table.
+
+<br/>
+
+| model                                                             |  mpg   |  cyl |  disp     |
+|:------------------------------------------------------------------|:------:|:----:|----------:|
+| [Mazda RX4](https://sco.wikipedia.org/wiki/Mazda_RX-4)            | *21.0* | **6**|    160    |
+| `Mazda RX4 Wag`                                                   | *21.0* |   6  |    160    |
+| [Datsun 710](https://en.wikipedia.org/wiki/Nissan_Violet#710)     | *22.8* |   4  |    108    |
+| [Hornet 4 Drive](https://en.wikipedia.org/wiki/AMC_Hornet)        | 21.4   |   6  |  **258**  |
+Table:  *Demonstration of the output from `pipe_tables` Markdown syntax.*
+
+<br/>
+
+Since this is a Markdown table, you can add additional Markdown syntax for formatting. See if you can figure out what syntax I added to my table and add some to your table. Also check out the *Tables* section of [PanDoc User's Guide](https://pandoc.org/MANUAL.html#tables) for other Markdown table options, including how to add a caption. In addition to `pipe_tables`, you can create `multiline_tables` `grid_tables`, and `simple_tables`.
+
+Something to notice is that the Markdown table spans the entire width of the page---even though it does not need all of that space. As far as I know, there is no way to control this behavior without adding additional HTML formatting.
+
+> **Recommendation** Use `Markdown` for small, simple tables where styling is not a concern.
+
+### 2.2 R Markdown Paged Tables
+
+With larger tables, it may not be practical to display the full table inline. So we need a way to shrink a large table so it looks good while still allowing access to the full table.
+
+The next type of table I want you to try are Paged Tables. R Markdown comes with its own built in table function called `paged_table`. The `paged_table` function allows pagination of rows and columns making it possible to render a large table in a small space.
+
+It is easy to code `paged_table` but that ease comes with a small price---limited functionality. Here are the options you do have with `paged_table` function.
+
+| Option           | Description                                    |
+|------------------|------------------------------------------------|
+| `rows.print`     | Maximum rows to print per page.                |
+| `max.print`      | Maximum rows in the table (defaults to 1000).  |
+| `cols.print`     | Maximum columns in the table (defaults to 10). |
+| `rownames.print` | Print row names as part of the table.          |
+Table: *A Markdown table listing the Options for the `paged_table` function. *
+
+***A quick side note***. You actually need to load the `rmarkdown` package for `paged_table` to work. Anyway, this is a good time to return to the first code chunk in your `.Rmd` file---the chunk called `setup` that R Markdown added by default.
+
+I like to use this chunk to load all of the packages I need for my document. Using a single chunk for all of my packages helps me keep my document organized. Notice the `setup` chunk has the option `include=FALSE`. This prevents the content of the chunk from appearing in the final document, which for me is more stylistically appealing.  I can add a `sessionInfo()` chunk at the end of my document to report all of the packages so this information is available to the reader. We will cover `sessionInfo()` when we get into more depth on the subject of *reproducibly*. If you do not want to load the library you can run the command like this: `rmarkdown::paged_table()`.
+
+***Ok, back to the table***. Now I can create a table of `mtcars` with the `paged_table` function and use an option to limit the number of printed rows to `5` for each page. I used `echo=FALSE` in my code chunk to hide the code :). By now you should know where to look for a solution.
+
+<br/>
+
+```{r mtcars_paged, echo=FALSE, fig.cap="stuff"}
+paged_table(mtcars, options = list(rows.print = 5))
+```
+
+Notice that for each column, the column *class* is printed below the name (text enclosed in < >). This is irritating and related to printing a table from a built-in data frame. I have no idea how to fix this (within the confines of R Markdown) but I will work on a solution.
+
+> **Recommendation** Use `paged_table` for large tables where extensive styling is not a concern.
+
+### 2.3 Kable Tables
+
+Knitr comes with its own tool for rendering simple tables called `kable`. The documentation for `kable` can be found [here](https://cran.r-project.org/web/packages/kableExtra/index.html) or by running `?knitr::kable()` in the Console. By itself, kable  comes with *almost no options*. We can extend its functionality with the `kableExtra` package and piping syntax from `magrittr`. The features of `kableExtra`  are extensive and I will only touch on a few here. The documentation for `kableExtra` can be found [here](https://cran.r-project.org/web/packages/kableExtra/index.html) or by running `?kableExtra` in the Console after the package has been installed and loaded.
+
+> I highly recommend you [learn how to use these packages](https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_html.html) for making tables.
+
+Again, you will need to load `kableExtra` and either load the `knitr` package or run the command like this: `knitr::kable()`.
+
+First, let’s look at the default `kable` table output. We will use the head of the `mtcars` dataset.
+
+<br/>
+
+```{r kable_default}
+kable(head(mtcars), caption = "*Wow, this table looks terrible.*")
+```
+
+<br/>
+
+If we tried to render the entire table by omitting `head`, we would just get a long, crappy table in our document. Not cool. Lets see if we can jazz this up a bit with `kableExtra`.
+
+```{r kable_jazz}
+kable(head(mtcars), caption = "*This table looks better*") %>%
+  kable_styling()
+
+```
+
+Here I used the [pipe operator](https://riptutorial.com/r/topic/652/pipe-operators------and-others-) (`%>%`) to pass the results of `kable` to the function `kable_styling`---a part of the `kableExtra` package. By running  `kable_styling` *as is*, I am using defaults for all of the options.
+
+> The pipe operator is a powerful tool worth learning.
+
+Back to the table. It certainly looks better than the default `kable` version but we are missing the ability to *page* the table. I would like you to run these two commands and look at the output.
+
+This command will include the whole table.
+
+```
+kable(mtcars) %>%
+  kable_styling()
+```
+
+And this command will transpose the table (swap rows and columns) using the transpose (`t`) function. Remember, `mtcars` has `r nrow(mtcars)` rows and `r ncol(mtcars)` columns but when you transpose the table, it has `r nrow(t(mtcars))` rows and `r ncol(t(mtcars))` columns. So it is really wide in the transposed state.
+
+```
+kable(head(t(mtcars))) %>%
+  kable_styling()
+```
+
+I hope you agree that neither of these tables are acceptable, especially the second one. Unfortunately, the `kableExtra` package does not come with an option to add pagination. You can however put the table in a fixed-height, fixed-width (or both) box, and make it scrollable. We can do this by using a pipe operator and the `scroll_box` function. While we are at it, lets also add tweak some options in `kable_styling` to make a more handsome table.
+
+```{r kable_scroll}
+kable(t(mtcars), caption = "*Scrollable kable table.*") %>%
+  kable_styling(bootstrap_options = c("striped", "hover",
+                                      "condensed", "responsive")) %>%
+  scroll_box(width = "100%", height = "300px")
+```
+
+<br/>
+
+For the `scroll_box` function I set the `width = "100%"` rather than specifying a dimension. This ensures the box will always be the width of the page no matter how small the window is.
+
+Even though you cannot make a paged table with `kable`, there are  many styling options available in the `kableExtra` package that makes this method  extremely useful and worth learning. Plus, the code is relatively simple to write.
+
+I want to show you one more feature that is not available the other table methods we cover in this Assignment---*floating*. Let's first subset the `mtcars` dataset so we can make a small table. Next we use the `full_width` and `position` options to control the size and position of the table. 
+
+Here is our code chunk.
+
+```{r kable_float}
+mtcars_sub <- mtcars[1:7,1:6]
+kable(mtcars_sub) %>%
+  kable_styling(bootstrap_options = "striped",
+                full_width = FALSE,
+                position = "float_right")
+```
+
+<br/><br/>
+
+Let’s say we have a bunch of text that we want to put side-by-side with this small table. Our subsetted `mtcars` dataset now has `r nrow(mtcars_sub)` rows and `r ncol(mtcars_sub)` columns. We can make our table smaller by setting `full_width = FALSE` in `kable_styling` and float the table by setting `position = "float_right"`
+
+Please study the [extensive options available in `kable` and `kableExtra`](https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_html.html) and create tables that implement some of the options.
+
+<br/><br/>
+
+> **Recommendation** Use `kable` + `kableExtra` for small tables where extensive styling is desired.
+
+### 2.4 DT Tables
+
+The last option I want to cover for building tables is implemented using the `datatable` function from the [DT](https://rstudio.github.io/DT/) package, an interface to the JavaScript library *[DataTables](https://datatables.net/)*. To demonstrate the functionality, I will use a larger dataset called `USJudgeRatings` from the `datasets` package. `USJudgeRatings` has `r nrow(USJudgeRatings)` rows and `r ncol(USJudgeRatings)` columns. This table is too big---horizontally and vertically---to fit on a standard page.
+
+The syntax for the `DT::datatable` is more complicated than the other methods but that comes with  more extensive functionality.
+
+> Working with `DT::datatable` is an advanced level skill. I highly recommend you learn how to use the package, but it will take  practice.
+
+Please make sure you are comfortable with the other methods first before trying to use `DT::datatable`. I promise, if you do not know what you are doing, this package will cause a lot of frustration. That said, I use it all the time because it is awesome.
+
+Moving on. If we run `DT` on the `USJudgeRatings` dataset without any options the table will spill off the side of the page. Again, not cool. Try to run this command and see what happens.
+
+```
+datatable(USJudgeRatings)
+```
+
+`DT::datatable` *does not page tables horizontally* like the `paged_table` command does (descibed above). We can set the width of the table and add an option that allows horizontal scrolling. For this we use the `options` argument. The syntax is to add `width = "100%"` followed by `options = list()`, where we put a comma separated list of options. For now, we just include `scrollX` in our list of options.
+
+```{r dt}
+datatable(USJudgeRatings, width = "100%",
+          options = list(scrollX = TRUE))
+```
+
+<br/>
+
+Play around with the table a little. As you can see
+
+* the table now fits in the window,
+* horizontal scrolling in enabled,
+* the page is vertically paged,
+* there is a *Show entries* dropdown, and
+* there is a *Search* box.
+
+The *Show entries* and *Search* box are added by default. We can decide whether to show these options or not. I will save that for later. For now, I want to leave you with a more stylized DT datatable to give you a sense of the possibilities. Don't worry so much about the code---pay attention to the functionality.
+
+```{r dt_jazz}
+datatable(USJudgeRatings, width = "100%",
+          extensions = 'Buttons', options = list(
+            scrollX = TRUE,
+            dom = 'lfrtipB',
+            buttons = c('copy', 'csv', 'excel', 'pdf', 'print'),
+            pageLength = 5,
+            lengthMenu = c(5, 10, 20, 45)
+            )
+          )
+```
+<br/><br/>
+
+I added buttons to download the table to different formats, changed the page length to 5, and changed the values in the *Show entries* dropdown. Play around with the table. There is a lot more to do with this package and we will come back to it often.
+
+> **Recommendation** Use `DT::datatable` for large tables where extensive styling is desired.
+
+That’s all for this assignment. Next time we will discuss figures and images.
+
+## Session Info
+
+```{r session}
+sessionInfo()
+```
