@@ -134,12 +134,12 @@ For each example, I will use the `mtcars` dataset from the `datasets` package. T
 
 You will use four different tools in this assignment for making tables. Here is a summary table of of each tool. 
 
-| Table type                    | Table size       |  Formatting  | Skill Level      |
-|-------------------------------|:----------------:|:------------:|:----------------:|
-| `markdown`                    | small            | minimal      | beginner         |
-| `rmarkdown::paged_table`      | large            | minimal      | beginner         |
-| `knitr::kable` + `kableExtra` | small            | extensive    | intermediate     |
-| `DT` + `DataTables`           | large            | extensive    | advanced         |
+| Table type                    | Table size       |  Formatting Options  | Skill Level      |
+|-------------------------------|:----------------:|:--------------------:|:----------------:|
+| `markdown`                    | small            | minimal              | beginner         |
+| `rmarkdown::paged_table`      | large            | minimal              | beginner         |
+| `knitr::kable` + `kableExtra` | small            | extensive            | intermediate     |
+| `DT` + `DataTables`           | large            | extensive            | advanced         |
 Table: *Table types and recommended uses.*
 
 <br/>
