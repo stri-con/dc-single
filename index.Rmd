@@ -408,13 +408,13 @@ knitr::opts_chunk$set(echo = TRUE, knitr.purl.inline = TRUE)
 ```
 ````
 
-Test the behavior of the different options for `purl` on your document. You can also use this funtion on *any* R Markdown document to quickly retrieve the code.  
+Test the behavior of the different options for `purl` on your document. You can also use this funtion on *any* R Markdown document to quickly retrieve the code. For example, if you download the Rmd file for this page from GitHub you can run `purl` to quickly extract the R code.  
 
-> **Recommendation** Use `purl` to generate a simple R script version of you R Markdown document *after* the document is completed and saved.
+> **Recommendation** Use `purl` to generate a simple R script version of your R Markdown document *after* the document is finished and saved. You can then link to the file somewhere in your document. 
 
 ### Download Rmd
 
-I hope by now you have seen that any document I present in this course has a link to a GitHub repo where you can download or copy the `.Rmd` file. That's great an all, but wouldn't it be nice if you could do it right from the HTML page? Well, you can by adding one simple line of code as a property of `html_document` in your YAML header ---`code_download: true`. 
+I hope by now you have seen that any document I present in this course has a link to a GitHub repo where you can download or copy the `.Rmd` file. That's great and all, but wouldn't it be nice if you could do it right from the HTML page? Well, you can by adding one simple line of code as a property of `html_document` in your YAML header ---`code_download: true`. 
 
 ```
 output:
@@ -433,17 +433,17 @@ You could of course set the property to `false` except this is the default value
 
 ### Code Folding
 
-I have mentioned a time or two that the benefits of using R Markdown is the ability to ***execute*** and ***display*** code in your final document. If we go back to the default `setup` chunk at the top of the `.Rmd` we see this:
+I have mentioned a time or two that the benefits of using R Markdown is the ability to ***execute*** and ***display*** code in your final document. If you go back to the default `setup` chunk at the top of your `.Rmd` you should see this:
 
 ```
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-I discussed this previously in #5 of the [Chunk structure & options](https://stri-con.github.io/data-curation/2020/04/09/lesson-2/#chunk-structure-options-1) section in Lesson 2. Briefly, this is a *global command* that ensure all R code chunks are visible in the final document unless you escape this behavior by using `echo = FALSE` in a particular chunk. Of course, you could also simply set the global option to `FALSE` as is `knitr::opts_chunk$set(echo = FALSE)` and then none of the R code would be visible at all. This is a perfectly fine option in some situations but not in others. 
+I discussed this chunk previously in #5 of the [Chunk structure & options](https://stri-con.github.io/data-curation/2020/04/09/lesson-2/#chunk-structure-options-1) section in Lesson 2. Briefly, this is a *global command* that ensures all R code chunks are visible in the final document, unless you escape this behavior by using `echo = FALSE` in a particular chunk. Of course, you could also set the global option to `FALSE` as is `knitr::opts_chunk$set(echo = FALSE)` and then none of the R code would be visible at all. This is a perfectly fine option in some situations but not in others. 
 
-Let's face it---code takes up a lot of space in a document and large code chunks are not particularly pleasing to look at. You may encounter situations where you both want the code available on a page *but* you also want to hide the code. For this we use a technique called ***code folding***. Near the bottom of [Lesson 0](https://stri-con.github.io/data-curation/2020/03/28/lesson-0/), I used some simple HTML to make a section that folds the R code for the Clifford Attractor.  There is a little `Show/hide` button that allows you to look at the code if you want to; otherwise it is hidden by default. 
+Let's face it---code takes up a lot of space in a document and large code chunks are not particularly pleasing to look at. You may encounter situations where you both want the code available on a page *but* you also want to hide the code. For this we use a technique called ***code folding***. Near the bottom of [Lesson 0](https://stri-con.github.io/data-curation/2020/03/28/lesson-0/), I used some simple HTML to make a section that folds the R code for the Clifford Attractor. There is a little `Show/hide` button that allows you to look at the code if you want to; otherwise it is hidden by default. But this approach is a little clunky because you must **a**) know some HTML and **b**) include this for every chunk. 
 
-R Markdown has a similar functionality for showing and hiding code. Again, return to your YAML header and add the argument  `code_folding:` as a nested property of `html_document:`. Your two options for `code_folding:` are `show` and `hide`. 
+R Markdown has a similar functionality for showing and hiding code but it only takes a single line of code added to the YAML header. Again, return to your YAML header and add the argument  `code_folding:` as a nested property of `html_document:`. Your two options for `code_folding:` are `show` and `hide`. 
 
 ```
 output:
@@ -457,7 +457,7 @@ output:
     code_folding: hide
 ```
 
-Once you add this to the YAML header, the drop down `Code` button in the upper right corner of the page should now include `Show All Code` and `Hide All Code`. This allows the user to specify how they want to view the document. Whichever property you set for `code_folding` will be the default state of the document. 
+Once you add this to the YAML header, the drop down `Code` button in the upper right corner of the page should now include `Show All Code` and `Hide All Code`. This allows the user to specify how they want to view the code in the document. Either property you set for `code_folding` will be the default state for the entire document. 
 
 You should also notice that a new `Code` button appears next to every code chunk in your document. Again, if you want to exclude the code from individual chunks, just set `echo = FALSE` for that chunk and the code will not be included at all. 
 
@@ -465,7 +465,7 @@ You should also notice that a new `Code` button appears next to every code chunk
 
 <br/>
 
-As far as I know there is no way of folding the results of a code chunk unless you use HTML. 
+As far as I know there is no way of folding the *results* of a code chunk or folding indivudual chunks unless you use HTML. 
 
 That's all for this assignment. 
 
