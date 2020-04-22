@@ -1,7 +1,7 @@
 ---
 title: "[Lesson 2: Your Practical Page](https://github.com/stri-con/dc-single/blob/master/index.Rmd)"
 author: "by Jarrod"
-date: "16 April, 2020"
+date: "22 April, 2020"
 smart: true
 output:
   html_document:
@@ -12,6 +12,8 @@ output:
     highlight: tango
     keep_md: true
     self_contained: true
+    code_download: true
+    code_folding: hide
 #output:
 #  epuRate::epurate:
 #    toc: TRUE
@@ -20,6 +22,8 @@ output:
 editor_options:
   chunk_output_type: inline
 ---
+
+
 
 
 
@@ -35,7 +39,7 @@ The page itself is written almost entirely in R Markdown, meaning there is no ex
 >
 > Simply hit the knit button or use the shortcut keys---on MacOS `Cmd`+`Shift`+`K` and Windows `Ctrl`+`Shift`+`K`. Learn to love these shortcut keys. They will save you time.
 
-You can choose how your document is previewed using the dropdown menu in the document settings. `Preview in Window` opens the document in a separate RStudio window and `Preview in Viewer Pane` lets you see the document in the main RStudio IDE. These are good for *quick* looks. You should **always** double-check the actual HTML file because sometimes things look different in RStudio.
+You can choose how your document is previewed using the drop down menu in the document settings. `Preview in Window` opens the document in a separate RStudio window and `Preview in Viewer Pane` lets you see the document in the main RStudio IDE. These are good for *quick* looks. You should **always** double-check the actual HTML file because sometimes things look different in RStudio.
 <br/>
 
 ![](files/preview.png)
@@ -99,7 +103,7 @@ Next, it is a really good habit to check code chunks as you add them. This will 
 
 ![](files/run-chunk.png)
 
-Take a look at the tool bar on the far right. **Option 1** is a dropdown menu that gives you an alternative way to set code chunk options. **Option 2** will *Run all Code Chunks Above* meaning that RStudio will run all code chunks above the current chunk but not the current chunk itself. And **Option 3** will *Run the Current Chunk*. Incidentally, if you do not see these options it means something is wrong with the chunk.
+Take a look at the tool bar on the far right. **Option 1** is a drop down menu that gives you an alternative way to set code chunk options. **Option 2** will *Run all Code Chunks Above* meaning that RStudio will run all code chunks above the current chunk but not the current chunk itself. And **Option 3** will *Run the Current Chunk*. Incidentally, if you do not see these options it means something is wrong with the chunk.
 
 Go ahead and run the chunk.
 
@@ -116,9 +120,9 @@ You last task is to modify the YAML header to suit your needs and tastes. I woul
 
 ## Assignment 2: Tables
 
-In this assignment, you will explore different methods of incorporating tables in your document. The choice of method depends on **a**) the type of data, **b**) the amount of data, and **c**) the desired output. I will cover a few tools for creating tables but please note there are many options out there, so look around and let us know if you find a tool you like.
+In this assignment, you will explore different methods of incorporating tables in your document. The choice of method depends on **a**) the type of data, **b**) the amount of data, and **c**) the desired output. I will cover a few tools for creating tables but please note there are [many options](https://rfortherestofus.com/2019/11/how-to-make-beautiful-tables-in-r/) out there, so look around and let us know if you find a tool you like.
 
-For each example, I will use the `mtcars` dataset from the `datasets` package. The `mtcars` dataset has 32 rows and 11 columns. Feel free to load your own data table or use the `mtcars` dataset.
+For each example, I will use the `mtcars` data set from the `datasets` package. The `mtcars` data set has 32 rows and 11 columns. Feel free to load your own data table or use the `mtcars` data set.
 
 ### Tools
 
@@ -138,7 +142,7 @@ Table: *Table types and recommended uses.*
 
 The simplest method of building a table is with Markdown syntax. This is a nice option because you can hard code the table right into the document---no need to install and load libraries or write code chunks---and it is easy to implement. The downside is there is minimal functionality available in a Markdown table.
 
-Markdown does not work well for large tables. So I will first grab a subset of `mtcars`, specifically the firt 4 rows and 3 columns. In my code chunk I add the chunk option `comment=""`. This prevents Knitr from appending a string (default is `##`) to the start of each line of results in the final document.
+Markdown does not work well for large tables. So I will first grab a subset of `mtcars`, specifically the first 4 rows and 3 columns. In my code chunk I add the chunk option `comment=""`. This prevents knit from appending a string (default is `##`) to the start of each line of results in the final document.
 
 
 ```r
@@ -156,7 +160,7 @@ Hornet 4 Drive 21.4   6  258
 
 <br/>
 
-*Incidentally, the rsults box above is technically the simplest table you can make, either by calling the data frame `mtcars_sub` directly or running `print.data.frame(mtcars_sub)`.*
+*Incidentally, the results box above is technically the simplest table you can make, either by calling the data frame `mtcars_sub` directly or running `print.data.frame(mtcars_sub)`.*
 
 Anyway, run this code chunk, copy the results, and make a Markdown table. You can either run the chunk in RStudio without rendering the document (described above) or render the document and copy the results from HTML page. I added a header to the first column. And here is the Markdown table.
 
@@ -196,9 +200,9 @@ Table: *A Markdown table listing the Options for the `paged_table` function. *
 
 ***A quick side note***. You actually need to load the `rmarkdown` package for `paged_table` to work. Anyway, this is a good time to return to the first code chunk in your `.Rmd` file---the chunk called `setup` that R Markdown added by default.
 
-I like to use this chunk to load all of the packages I need for my document. Using a single chunk for all of my packages helps me keep my document organized. Notice the `setup` chunk has the option `include=FALSE`. This prevents the content of the chunk from appearing in the final document, which for me is more stylistically appealing.  I can add a `sessionInfo()` chunk at the end of my document to report all of the packages so this information is available to the reader. We will cover `sessionInfo()` when we get into more depth on the subject of *reproducibly*. If you do not want to load the library you can run the command like this: `rmarkdown::paged_table()`.
+I like to use this chunk to load all of the packages I need for my document. Using a single chunk for all of my packages helps me keep my document organized. Notice the `setup` chunk has the option `include=FALSE`. This prevents the content of the chunk from appearing in the final document, which for me is more stylistically appealing.  I can add a `sessionInfo()` chunk at the end of my document to report all of the packages so this information is available to the reader. We will cover `sessionInfo()` when we get into more depth on the subject of *reproducible*. If you do not want to load the library you can run the command like this: `rmarkdown::paged_table()`.
 
-***Ok, back to the table***. Now I can create a table of `mtcars` with the `paged_table` function and use an option to limit the number of printed rows to `5` for each page. I used `echo=FALSE` in my code chunk to hide the code :). By now you should know where to look for a solution.
+***OK, back to the table***. Now I can create a table of `mtcars` with the `paged_table` function and use an option to limit the number of printed rows to `5` for each page. I used `echo=FALSE` in my code chunk to hide the code :). By now you should know where to look for a solution.
 
 <br/>
 
@@ -220,7 +224,7 @@ Knitr comes with its own tool for rendering simple tables called `kable`. The do
 
 Again, you will need to load `kableExtra` and either load the `knitr` package or run the command like this: `knitr::kable()`.
 
-First, let’s look at the default `kable` table output. We will use the head of the `mtcars` dataset.
+First, let’s look at the default `kable` table output. We will use the head of the `mtcars` data set.
 
 <br/>
 
@@ -915,7 +919,7 @@ For the `scroll_box` function I set the `width = "100%"` rather than specifying 
 
 Even though you cannot make a paged table with `kable`, there are  many styling options available in the `kableExtra` package that makes this method  extremely useful and worth learning. Plus, the code is relatively simple to write.
 
-I want to show you one more feature that is not available the other table methods we cover in this Assignment---*floating*. Let's first subset the `mtcars` dataset so we can make a small table. Next we use the `full_width` and `position` options to control the size and position of the table. 
+I want to show you one more feature that is not available the other table methods we cover in this Assignment---*floating*. Let's first subset the `mtcars` data set so we can make a small table. Next we use the `full_width` and `position` options to control the size and position of the table. 
 
 Here is our code chunk.
 
@@ -1009,7 +1013,7 @@ kable(mtcars_sub) %>%
 
 <br/><br/>
 
-Let’s say we have a bunch of text that we want to put side-by-side with this small table. Our subsetted `mtcars` dataset now has 7 rows and 6 columns. We can make our table smaller by setting `full_width = FALSE` in `kable_styling` and float the table by setting `position = "float_right"`
+Let’s say we have a bunch of text that we want to put side-by-side with this small table. Our subsetted `mtcars` data set now has 7 rows and 6 columns. We can make our table smaller by setting `full_width = FALSE` in `kable_styling` and float the table by setting `position = "float_right"`
 
 Please study the [extensive options available in `kable` and `kableExtra`](https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_html.html) and create tables that implement some of the options.
 
@@ -1019,7 +1023,7 @@ Please study the [extensive options available in `kable` and `kableExtra`](https
 
 ### 2.4 DT Tables
 
-The last option I want to cover for building tables is implemented using the `datatable` function from the [DT](https://rstudio.github.io/DT/) package, an interface to the JavaScript library *[DataTables](https://datatables.net/)*. To demonstrate the functionality, I will use a larger dataset called `USJudgeRatings` from the `datasets` package. `USJudgeRatings` has 43 rows and 12 columns. This table is too big---horizontally and vertically---to fit on a standard page.
+The last option I want to cover for building tables is implemented using the `datatable` function from the [DT](https://rstudio.github.io/DT/) package, an interface to the JavaScript library *[DataTables](https://datatables.net/)*. To demonstrate the functionality, I will use a larger data set called `USJudgeRatings` from the `datasets` package. `USJudgeRatings` has 43 rows and 12 columns. This table is too big---horizontally and vertically---to fit on a standard page.
 
 The syntax for the `DT::datatable` is more complicated than the other methods but that comes with  more extensive functionality.
 
@@ -1027,13 +1031,13 @@ The syntax for the `DT::datatable` is more complicated than the other methods bu
 
 Please make sure you are comfortable with the other methods first before trying to use `DT::datatable`. I promise, if you do not know what you are doing, this package will cause a lot of frustration. That said, I use it all the time because it is awesome.
 
-Moving on. If we run `DT` on the `USJudgeRatings` dataset without any options the table will spill off the side of the page. Again, not cool. Try to run this command and see what happens.
+Moving on. If we run `DT` on the `USJudgeRatings` data set without any options the table will spill off the side of the page. Again, not cool. Try to run this command and see what happens.
 
 ```
 datatable(USJudgeRatings)
 ```
 
-`DT::datatable` *does not page tables horizontally* like the `paged_table` command does (descibed above). We can set the width of the table and add an option that allows horizontal scrolling. For this we use the `options` argument. The syntax is to add `width = "100%"` followed by `options = list()`, where we put a comma separated list of options. For now, we just include `scrollX` in our list of options.
+`DT::datatable` *does not page tables horizontally* like the `paged_table` command does (described above). We can set the width of the table and add an option that allows horizontal scrolling. For this we use the `options` argument. The syntax is to add `width = "100%"` followed by `options = list()`, where we put a comma separated list of options. For now, we just include `scrollX` in our list of options.
 
 
 ```r
@@ -1051,10 +1055,10 @@ Play around with the table a little. As you can see
 * the table now fits in the window,
 * horizontal scrolling in enabled,
 * the page is vertically paged,
-* there is a *Show entries* dropdown, and
+* there is a *Show entries* drop down, and
 * there is a *Search* box.
 
-The *Show entries* and *Search* box are added by default. We can decide whether to show these options or not. I will save that for later. For now, I want to leave you with a more stylized DT datatable to give you a sense of the possibilities. Don't worry so much about the code---pay attention to the functionality.
+The *Show entries* and *Search* box are added by default. We can decide whether to show these options or not. I will save that for later. For now, I want to leave you with a more stylized DT data table to give you a sense of the possibilities. Don't worry so much about the code---pay attention to the functionality.
 
 
 ```r
@@ -1073,11 +1077,127 @@ datatable(USJudgeRatings, width = "100%",
 <script type="application/json" data-for="htmlwidget-9277e86fe22b48ad32b8">{"x":{"filter":"none","extensions":["Buttons"],"data":[["AARONSON,L.H.","ALEXANDER,J.M.","ARMENTANO,A.J.","BERDON,R.I.","BRACKEN,J.J.","BURNS,E.B.","CALLAHAN,R.J.","COHEN,S.S.","DALY,J.J.","DANNEHY,J.F.","DEAN,H.H.","DEVITA,H.J.","DRISCOLL,P.J.","GRILLO,A.E.","HADDEN,W.L.JR.","HAMILL,E.C.","HEALEY.A.H.","HULL,T.C.","LEVINE,I.","LEVISTER,R.L.","MARTIN,L.F.","MCGRATH,J.F.","MIGNONE,A.F.","MISSAL,H.M.","MULVEY,H.M.","NARUK,H.J.","O'BRIEN,F.J.","O'SULLIVAN,T.J.","PASKEY,L.","RUBINOW,J.E.","SADEN.G.A.","SATANIELLO,A.G.","SHEA,D.M.","SHEA,J.F.JR.","SIDOR,W.J.","SPEZIALE,J.A.","SPONZO,M.J.","STAPLETON,J.F.","TESTO,R.J.","TIERNEY,W.L.JR.","WALL,R.A.","WRIGHT,D.B.","ZARRILLI,K.J."],[5.7,6.8,7.2,6.8,7.3,6.2,10.6,7,7.3,8.2,7,6.5,6.7,7,6.5,7.3,8,7.7,8.3,9.6,7.1,7.6,6.6,6.2,7.5,7.8,7.1,7.5,7.5,7.1,6.6,8.4,6.9,7.3,7.7,8.5,6.9,6.5,8.3,8.3,9,7.1,8.6],[7.9,8.9,8.1,8.8,6.4,8.8,9,5.9,8.9,7.9,8,8,8.6,7.5,8.1,8,7.6,7.7,8.2,6.9,8.2,7.3,7.4,8.3,8.7,8.9,8.5,9,8.1,9.2,7.4,8,8.5,8.9,6.2,8.3,8.3,8.2,7.3,8.2,7,8.4,7.4],[7.7,8.8,7.8,8.5,4.3,8.7,8.9,4.9,8.9,6.7,7.6,7.6,8.2,6.4,8,7.4,6.6,6.7,7.4,5.7,7.7,6.9,6.2,8.1,8.5,8.7,8.3,8.9,7.7,9,6.9,7.9,7.8,8.8,5.1,8.1,8,7.7,7,7.8,5.9,8.4,7],[7.3,8.5,7.8,8.8,6.5,8.5,8.7,5.1,8.7,8.1,7.4,7.2,6.8,6.8,8,7.7,7.2,7.5,7.8,6.6,7.1,6.8,6.2,7.7,8.6,8.9,8,8.7,8.2,9,8.4,7.9,8.5,8.7,5.6,8.3,8.1,7.8,6.8,8.3,7,7.7,7.5],[7.1,7.8,7.5,8.3,6,7.9,8.5,5.4,8.6,7.9,7.3,7,6.9,6.5,7.9,7.3,6.5,7.4,7.7,6.9,6.6,6.7,5.4,7.4,8.5,8.7,7.9,8.4,8,8.4,8,7.8,8.1,8.4,5.6,8.4,7.9,7.6,7,8.4,7,7.5,7.5],[7.4,8.1,7.6,8.5,6.2,8,8.5,5.9,8.5,8,7.5,7.1,6.6,7,8,7.3,6.5,7.5,7.7,6.6,6.6,6.8,5.7,7.3,8.4,8.8,7.9,8.5,8.1,8.6,7.9,7.8,8.2,8.5,5.9,8.2,7.9,7.7,7.1,8.3,7.2,7.7,7.7],[7.1,8,7.5,8.7,5.7,8.1,8.5,4.8,8.4,7.9,7.1,6.9,7.1,6.6,7.9,7.3,6.8,7.1,7.7,6.2,6.7,6.4,5.8,7.3,8.5,8.9,7.8,8.4,8.2,9.1,8.2,7.6,8.4,8.5,5.6,8.2,7.9,7.7,6.7,7.7,6.9,7.8,7.4],[7.1,8,7.5,8.7,5.7,8,8.5,5.1,8.4,8.1,7.2,7,7.3,6.8,7.8,7.2,6.7,7.3,7.8,6,6.7,6.3,5.9,7.3,8.5,9,7.8,8.3,8.4,9.1,8.4,7.4,8.5,8.5,5.6,8.1,7.7,7.7,6.7,7.6,6.9,8.2,7.2],[7.1,7.8,7.3,8.4,5.1,8,8.6,4.7,8.4,7.7,7.1,7,7.2,6.3,7.8,7.1,6.4,7.1,7.5,5.8,6.8,6.3,5.2,7.2,8.4,8.8,7.8,8.3,8,8.9,7.7,7.4,8.1,8.4,5.3,7.9,7.6,7.5,6.7,7.5,6.5,8,6.9],[7,7.9,7.4,8.5,5.3,8,8.4,4.9,8.5,7.8,7.2,7.1,7.2,6.6,7.8,7.2,6.5,7.3,7.6,5.8,6.8,6.3,5.8,7.3,8.4,8.9,7.7,8.3,8.1,9,7.9,7.4,8.3,8.4,5.5,8,7.7,7.6,6.7,7.7,6.6,8.1,7],[8.3,8.5,7.9,8.8,5.5,8.6,9.1,6.8,8.8,8.5,8.4,6.9,8.1,6.2,8.4,8,6.9,8.1,8,7.2,7.5,7.4,4.7,7.8,8.7,9,8.3,8.8,8.4,8.9,8.4,8.1,8.7,8.8,6.3,8,8.1,8.5,8,8.1,7.6,8.3,7.8],[7.8,8.7,7.8,8.7,4.8,8.6,9,5,8.8,7.9,7.7,7.2,7.7,6.5,8,7.6,6.7,7.4,8,6,7.3,6.6,5.2,7.6,8.7,9,8.2,8.7,8.1,9.2,7.5,7.9,8.3,8.8,5.3,8.2,8,7.7,7,7.9,6.6,8.1,7.1]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>CONT<\/th>\n      <th>INTG<\/th>\n      <th>DMNR<\/th>\n      <th>DILG<\/th>\n      <th>CFMG<\/th>\n      <th>DECI<\/th>\n      <th>PREP<\/th>\n      <th>FAMI<\/th>\n      <th>ORAL<\/th>\n      <th>WRIT<\/th>\n      <th>PHYS<\/th>\n      <th>RTEN<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"scrollX":true,"dom":"lfrtipB","buttons":["copy","csv","excel","pdf","print"],"pageLength":5,"lengthMenu":[5,10,20,45],"columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5,6,7,8,9,10,11,12]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script><!--/html_preserve-->
 <br/><br/>
 
-I added buttons to download the table to different formats, changed the page length to 5, and changed the values in the *Show entries* dropdown. Play around with the table. There is a lot more to do with this package and we will come back to it often.
+I added buttons to download the table to different formats, changed the page length to 5, and changed the values in the *Show entries* drop down. Play around with the table. There is a lot more to do with this package and we will come back to it often.
 
 > **Recommendation** Use `DT::datatable` for large tables where extensive styling is desired.
 
-That’s all for this assignment. Next time we will discuss figures and images.
+That’s all for this assignment. 
+
+## Assignment 3: Code
+
+If you are interested in making your science more transparent and reproducible, you need to provide at least two things---the raw data you generated and the code you used to analyze it. Hopefully it is obvious by now that you need to provide access to ***both*** components; neither is particularly useful without the other. We will cover data availability in a future lesson. For this assignment, you will practice several different methods for making your code accessible. The method or methods you choose for your own work will depend on the type of analyses *and* the type of code. 
+
+> Your assignment is to implement these methods in your document and play around with the different options. 
+
+### Purl
+
+Knitr comes with a built-in function called `purl`, which allows you to extract all the R code from an R Markdown document and convert it to an R script. In order to run `purl`, you must either load the knitr library first (i.e., `library(knitr)`) and then run `purl` or call the function directly by running `knitr::purl()`. We will start by discussing some simple *options* for running `purl` and then talk about *how* you run the command. The basic structure of the command is:
+
+> `knitr::purl(input="filename.Rmd", documentation = L)`
+
+By default, `purl` uses the base name of the input file as the base name of the output file. If you want to control this behavior, add the option `output="filename.R"` where `filename` is whatever you choose. 
+
+The option `documentation` is an integer that specifies the level (`L`) of documentation to add to the script. You have three choices
+
+* **0** means output pure code to the script, discard all Markdown text and code chunk details. 
+* **1** (the default) means discard all Markdown text but add the chunk headers to the script as commented lines. 
+* **2** means to add all Markdown text and code chunks to the script as commented lines.
+
+As far as I know, you **cannot** run `purl` from inside an actual code chunk. I have no idea why nor was I able to find an answer. If have an answer or know a solution, please let us know. There *easiest* way to generate an R script from an R Markdown document with `purl` to  is to run the command in the Console like so:
+
+`knitr::purl(input="filename.Rmd", documentation = 1)`
+
+> Run the `purl` command using the three options described above for `documentation` option and look at the output files. 
+
+Inline R expressions are ignored by default. For example, if you had an inline R expression like this `` `r
+sqrt(2)` `` 
+the expression would not be included in the R script generated by `purl`. If you want to include inline expressions in the R script, you need to set the global R option `knitr.purl.inline = TRUE` before calling `knitr::purl()`. 
+
+Remember way back when you generated your initial R Markdown document a default code chunk was added just below the YAML header?
+
+
+````
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+````
+
+If you add `knitr.purl.inline = TRUE` to that code chunk, all inline expressions will be added to the R script. 
+
+````
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, knitr.purl.inline = TRUE)
+```
+````
+
+The last thing I want to mention is that you can *prevent* certain code chunks from appearing in the R Script by adding the option `purl = FALSE` to the chunk. For example, if you add this option to the `setup` chunk we just discussed that chunk will not appear in the final document.  
+
+````
+```{r setup, include=FALSE, purl = FALSE}
+knitr::opts_chunk$set(echo = TRUE, knitr.purl.inline = TRUE)
+```
+````
+
+Test the behavior of the different options for `purl` on your document. You can also use this funtion on *any* R Markdown document to quickly retrieve the code.  
+
+> **Recommendation** Use `purl` to generate a simple R script version of you R Markdown document *after* the document is completed and saved.
+
+### Download Rmd
+
+I hope by now you have seen that any document I present in this course has a link to a GitHub repo where you can download or copy the `.Rmd` file. That's great an all, but wouldn't it be nice if you could do it right from the HTML page? Well, you can by adding one simple line of code as a property of `html_document` in your YAML header ---`code_download: true`. 
+
+```
+output:
+  html_document:
+    theme: journal
+    toc: true
+    toc_float: true
+    toc_depth: 3
+    highlight: tango
+    code_download: true
+```
+
+You could of course set the property to `false` except this is the default value and nothing will change. Look back at the top of this page and you should now see a `Code` button in the upper right corner. Click on the drop down and select `Download Rmd` and this entire page should be saved to your Downloads directory. 
+
+> Go ahead and add this option to your YAML header.
+
+### Code Folding
+
+I have mentioned a time or two that the benefits of using R Markdown is the ability to ***execute*** and ***display*** code in your final document. If we go back to the default `setup` chunk at the top of the `.Rmd` we see this:
+
+```
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+I discussed this previously in #5 of the [Chunk structure & options](https://stri-con.github.io/data-curation/2020/04/09/lesson-2/#chunk-structure-options-1) section in Lesson 2. Briefly, this is a *global command* that ensure all R code chunks are visible in the final document unless you escape this behavior by using `echo = FALSE` in a particular chunk. Of course, you could also simply set the global option to `FALSE` as is `knitr::opts_chunk$set(echo = FALSE)` and then none of the R code would be visible at all. This is a perfectly fine option in some situations but not in others. 
+
+Let's face it---code takes up a lot of space in a document and large code chunks are not particularly pleasing to look at. You may encounter situations where you both want the code available on a page *but* you also want to hide the code. For this we use a technique called ***code folding***. Near the bottom of [Lesson 0](https://stri-con.github.io/data-curation/2020/03/28/lesson-0/), I used some simple HTML to make a section that folds the R code for the Clifford Attractor.  There is a little `Show/hide` button that allows you to look at the code if you want to; otherwise it is hidden by default. 
+
+R Markdown has a similar functionality for showing and hiding code. Again, return to your YAML header and add the argument  `code_folding:` as a nested property of `html_document:`. Your two options for `code_folding:` are `show` and `hide`. 
+
+```
+output:
+  html_document:
+    theme: journal
+    toc: true
+    toc_float: true
+    toc_depth: 3
+    highlight: tango
+    code_download: true
+    code_folding: hide
+```
+
+Once you add this to the YAML header, the drop down `Code` button in the upper right corner of the page should now include `Show All Code` and `Hide All Code`. This allows the user to specify how they want to view the document. Whichever property you set for `code_folding` will be the default state of the document. 
+
+You should also notice that a new `Code` button appears next to every code chunk in your document. Again, if you want to exclude the code from individual chunks, just set `echo = FALSE` for that chunk and the code will not be included at all. 
+
+> Add `code_folding:` argument to your YAML header and set a property value. 
+
+<br/>
+
+As far as I know there is no way of folding the results of a code chunk unless you use HTML. 
+
+That's all for this assignment. 
 
 ## Session Info
 
@@ -1106,15 +1226,16 @@ sessionInfo()
 ## [5] knitr_1.28      
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] Rcpp_1.0.3        later_1.0.0       pillar_1.4.3      compiler_3.6.1   
-##  [5] highr_0.8         tools_3.6.1       digest_0.6.24     jsonlite_1.6.1   
-##  [9] evaluate_0.14     tibble_2.1.3      lifecycle_0.1.0   viridisLite_0.3.0
-## [13] pkgconfig_2.0.3   rlang_0.4.4       shiny_1.4.0       rstudioapi_0.11  
-## [17] crosstalk_1.0.0   yaml_2.2.1        xfun_0.12         fastmap_1.0.1    
-## [21] httr_1.4.1        stringr_1.4.0     xml2_1.2.2        vctrs_0.2.2      
-## [25] htmlwidgets_1.5.1 hms_0.5.3         webshot_0.5.2     glue_1.3.1       
-## [29] R6_2.4.1          readr_1.3.1       magrittr_1.5      promises_1.1.0   
-## [33] scales_1.1.0      htmltools_0.4.0   rvest_0.3.5       xtable_1.8-4     
-## [37] mime_0.9          colorspace_1.4-1  httpuv_1.5.2      stringi_1.4.6    
-## [41] munsell_0.5.0     crayon_1.3.4
+##  [1] Rcpp_1.0.4        later_1.0.0       highr_0.8         compiler_3.6.1   
+##  [5] pillar_1.4.3      base64enc_0.1-3   tools_3.6.1       digest_0.6.25    
+##  [9] jsonlite_1.6.1    evaluate_0.14     lifecycle_0.2.0   tibble_3.0.0     
+## [13] viridisLite_0.3.0 pkgconfig_2.0.3   rlang_0.4.5       shiny_1.4.0      
+## [17] cli_2.0.2         rstudioapi_0.11   crosstalk_1.0.0   yaml_2.2.1       
+## [21] xfun_0.13         fastmap_1.0.1     stringr_1.4.0     httr_1.4.1       
+## [25] xml2_1.2.2        htmlwidgets_1.5.1 vctrs_0.2.4       hms_0.5.3        
+## [29] webshot_0.5.2     glue_1.4.0        R6_2.4.1          fansi_0.4.1      
+## [33] readr_1.3.1       magrittr_1.5      promises_1.1.0    scales_1.1.0     
+## [37] ellipsis_0.3.0    htmltools_0.4.0   assertthat_0.2.1  rvest_0.3.5      
+## [41] xtable_1.8-4      mime_0.9          colorspace_1.4-1  httpuv_1.5.2     
+## [45] stringi_1.4.6     munsell_0.5.0     crayon_1.3.4
 ```
