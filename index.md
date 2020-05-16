@@ -1976,7 +1976,7 @@ image_append(img)
 
 > ##### Your Assignment is to work through the [magick tutorial](https://cran.r-project.org/web/packages/magick/vignettes/intro.html) and use `magick` in your document.
 
-If you have a pretty big document already, I recommend starting a new dummy document for this tutorial. That way you can make changes and render the document more quickly. Work with JPG files, PNG files with a transparent background, and SVGs. You can also use the `magick` package with R code generated figures so play with that too. **Learn this package**. 
+If you have a pretty big document already, I recommend starting a new dummy document for this tutorial. That way you can make changes and render the document more quickly. Work with JPG files, PNG files with a transparent background, and SVGs. You can also use the `magick` package with R code generated figures so play with that too. **Learn the magick package** by working through the [tutorial](https://cran.r-project.org/web/packages/magick/vignettes/intro.html). 
 
 ***
 
