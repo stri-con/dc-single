@@ -1,11 +1,11 @@
 ---
-title: "[Lesson 2: Your Practical Page](https://github.com/stri-con/dc-single/blob/master/index.Rmd)"
+title: "[Lesson 2: Practical Page](https://github.com/stri-con/dc-single/blob/master/index.Rmd)"
 author: "by Jarrod"
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 smart: true
 output:
   html_document:
-    theme: journal
+    theme: cerulean
     toc: true
     toc_float: true
     toc_depth: 3
@@ -13,7 +13,8 @@ output:
     keep_md: true
     self_contained: true
     code_download: true
-    code_folding: hide
+    code_folding: show
+    css: styles.css
 #output:
 #  epuRate::epurate:
 #    toc: TRUE
@@ -34,6 +35,11 @@ library(epuRate)
 library(kableExtra)
 library(rmarkdown)
 library(DT)
+library(scales)
+library(gridExtra)
+library(ggplot2)
+library(cowplot)
+library(magick)
 ```
 
 ## Overview
@@ -137,7 +143,7 @@ For each example, I will use the `mtcars` data set from the `datasets` package. 
 
 ### Tools
 
-You will use four different tools in this assignment for making tables. Here is a summary table of of each tool. 
+You will use four different tools in this assignment for making tables. Here is a summary table of of each tool.
 
 | Table type                    | Table size       |  Formatting Options  | Skill Level      |
 |-------------------------------|:----------------:|:--------------------:|:----------------:|
@@ -277,7 +283,7 @@ For the `scroll_box` function I set the `width = "100%"` rather than specifying 
 
 Even though you cannot make a paged table with `kable`, there are  many styling options available in the `kableExtra` package that makes this method  extremely useful and worth learning. Plus, the code is relatively simple to write.
 
-I want to show you one more feature that is not available the other table methods we cover in this Assignment---*floating*. Let's first subset the `mtcars` data set so we can make a small table. Next we use the `full_width` and `position` options to control the size and position of the table. 
+I want to show you one more feature that is not available the other table methods we cover in this Assignment---*floating*. Let's first subset the `mtcars` data set so we can make a small table. Next we use the `full_width` and `position` options to control the size and position of the table.
 
 Here is our code chunk.
 
@@ -289,7 +295,7 @@ kable(mtcars_sub) %>%
                 position = "float_right")
 ```
 
-<br/><br/>
+<br/>
 
 Let’s say we have a bunch of text that we want to put side-by-side with this small table. Our subsetted `mtcars` data set now has `r nrow(mtcars_sub)` rows and `r ncol(mtcars_sub)` columns. We can make our table smaller by setting `full_width = FALSE` in `kable_styling` and float the table by setting `position = "float_right"`
 
@@ -351,13 +357,13 @@ I added buttons to download the table to different formats, changed the page len
 
 > **Recommendation** Use `DT::datatable` for large tables where extensive styling is desired.
 
-That’s all for this assignment. 
+That’s all for this assignment.
 
 ## Assignment 3: Code
 
-If you are interested in making your science more transparent and reproducible, you need to provide at least two things---the raw data you generated and the code you used to analyze it. Hopefully it is obvious by now that you need to provide access to ***both*** components; neither is particularly useful without the other. We will cover data availability in a future lesson. For this assignment, you will practice several different methods for making your code accessible. The method or methods you choose for your own work will depend on the type of analyses *and* the type of code. 
+If you are interested in making your science more transparent and reproducible, you need to provide at least two things---the raw data you generated and the code you used to analyze it. Hopefully it is obvious by now that you need to provide access to ***both*** components; neither is particularly useful without the other. We will cover data availability in a future lesson. For this assignment, you will practice several different methods for making your code accessible. The method or methods you choose for your own work will depend on the type of analyses *and* the type of code.
 
-> Your assignment is to implement these methods in your document and play around with the different options. 
+> ##### Your assignment is to implement these methods in your document and play around with the different options.
 
 ### Purl
 
@@ -365,23 +371,23 @@ Knitr comes with a built-in function called `purl`, which allows you to extract 
 
 > `knitr::purl(input="filename.Rmd", documentation = L)`
 
-By default, `purl` uses the base name of the input file as the base name of the output file. If you want to control this behavior, add the option `output="filename.R"` where `filename` is whatever you choose. 
+By default, `purl` uses the base name of the input file as the base name of the output file. If you want to control this behavior, add the option `output="filename.R"` where `filename` is whatever you choose.
 
 The option `documentation` is an integer that specifies the level (`L`) of documentation to add to the script. You have three choices
 
-* **0** means output pure code to the script, discard all Markdown text and code chunk details. 
-* **1** (the default) means discard all Markdown text but add the chunk headers to the script as commented lines. 
+* **0** means output pure code to the script, discard all Markdown text and code chunk details.
+* **1** (the default) means discard all Markdown text but add the chunk headers to the script as commented lines.
 * **2** means to add all Markdown text and code chunks to the script as commented lines.
 
 As far as I know, you **cannot** run `purl` from inside an actual code chunk. I have no idea why nor was I able to find an answer. If have an answer or know a solution, please let us know. There *easiest* way to generate an R script from an R Markdown document with `purl` to  is to run the command in the Console like so:
 
 `knitr::purl(input="filename.Rmd", documentation = 1)`
 
-> Run the `purl` command using the three options described above for `documentation` option and look at the output files. 
+> Run the `purl` command using the three options described above for `documentation` option and look at the output files.
 
 Inline R expressions are ignored by default. For example, if you had an inline R expression like this `` `r
-sqrt(2)` `` 
-the expression would not be included in the R script generated by `purl`. If you want to include inline expressions in the R script, you need to set the global R option `knitr.purl.inline = TRUE` before calling `knitr::purl()`. 
+sqrt(2)` ``
+the expression would not be included in the R script generated by `purl`. If you want to include inline expressions in the R script, you need to set the global R option `knitr.purl.inline = TRUE` before calling `knitr::purl()`.
 
 Remember way back when you generated your initial R Markdown document a default code chunk was added just below the YAML header?
 
@@ -392,7 +398,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 ````
 
-If you add `knitr.purl.inline = TRUE` to that code chunk, all inline expressions will be added to the R script. 
+If you add `knitr.purl.inline = TRUE` to that code chunk, all inline expressions will be added to the R script.
 
 ````
 ```{r setup, include=FALSE}`r ''`
@@ -400,7 +406,7 @@ knitr::opts_chunk$set(echo = TRUE, knitr.purl.inline = TRUE)
 ```
 ````
 
-The last thing I want to mention is that you can *prevent* certain code chunks from appearing in the R Script by adding the option `purl = FALSE` to the chunk. For example, if you add this option to the `setup` chunk we just discussed that chunk will not appear in the final document.  
+The last thing I want to mention is that you can *prevent* certain code chunks from appearing in the R Script by adding the option `purl = FALSE` to the chunk. For example, if you add this option to the `setup` chunk we just discussed that chunk will not appear in the final document.
 
 ````
 ```{r setup, include=FALSE, purl = FALSE}`r ''`
@@ -408,13 +414,13 @@ knitr::opts_chunk$set(echo = TRUE, knitr.purl.inline = TRUE)
 ```
 ````
 
-Test the behavior of the different options for `purl` on your document. You can also use this funtion on *any* R Markdown document to quickly retrieve the code. For example, if you download the Rmd file for this page from GitHub you can run `purl` to quickly extract the R code.  
+Test the behavior of the different options for `purl` on your document. You can also use this funtion on *any* R Markdown document to quickly retrieve the code. For example, if you download the Rmd file for this page from GitHub you can run `purl` to quickly extract the R code.
 
-> **Recommendation** Use `purl` to generate a simple R script version of your R Markdown document *after* the document is finished and saved. You can then link to the file somewhere in your document. 
+> **Recommendation** Use `purl` to generate a simple R script version of your R Markdown document *after* the document is finished and saved. You can then link to the file somewhere in your document.
 
 ### Download Rmd
 
-I hope by now you have seen that any document I present in this course has a link to a GitHub repo where you can download or copy the `.Rmd` file. That's great and all, but wouldn't it be nice if you could do it right from the HTML page? Well, you can by adding one simple line of code as a property of `html_document` in your YAML header ---`code_download: true`. 
+I hope by now you have seen that any document I present in this course has a link to a GitHub repo where you can download or copy the `.Rmd` file. That's great and all, but wouldn't it be nice if you could do it right from the HTML page? Well, you can by adding one simple line of code as a property of `html_document` in your YAML header ---`code_download: true`.
 
 ```
 output:
@@ -427,7 +433,7 @@ output:
     code_download: true
 ```
 
-You could of course set the property to `false` except this is the default value and nothing will change. Look back at the top of this page and you should now see a `Code` button in the upper right corner. Click on the drop down and select `Download Rmd` and this entire page should be saved to your Downloads directory. 
+You could of course set the property to `false` except this is the default value and nothing will change. Look back at the top of this page and you should now see a `Code` button in the upper right corner. Click on the drop down and select `Download Rmd` and this entire page should be saved to your Downloads directory.
 
 > Go ahead and add this option to your YAML header.
 
@@ -439,11 +445,11 @@ I have mentioned a time or two that the benefits of using R Markdown is the abil
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-I discussed this chunk previously in #5 of the [Chunk structure & options](https://stri-con.github.io/data-curation/2020/04/09/lesson-2/#chunk-structure-options-1) section in Lesson 2. Briefly, this is a *global command* that ensures all R code chunks are visible in the final document, unless you escape this behavior by using `echo = FALSE` in a particular chunk. Of course, you could also set the global option to `FALSE` as is `knitr::opts_chunk$set(echo = FALSE)` and then none of the R code would be visible at all. This is a perfectly fine option in some situations but not in others. 
+I discussed this chunk previously in #5 of the [Chunk structure & options](https://stri-con.github.io/data-curation/2020/04/09/lesson-2/#chunk-structure-options-1) section in Lesson 2. Briefly, this is a *global command* that ensures all R code chunks are visible in the final document, unless you escape this behavior by using `echo = FALSE` in a particular chunk. Of course, you could also set the global option to `FALSE` as is `knitr::opts_chunk$set(echo = FALSE)` and then none of the R code would be visible at all. This is a perfectly fine option in some situations but not in others.
 
-Let's face it---code takes up a lot of space in a document and large code chunks are not particularly pleasing to look at. You may encounter situations where you both want the code available on a page *but* you also want to hide the code. For this we use a technique called ***code folding***. Near the bottom of [Lesson 0](https://stri-con.github.io/data-curation/2020/03/28/lesson-0/), I used some simple HTML to make a section that folds the R code for the Clifford Attractor. There is a little `Show/hide` button that allows you to look at the code if you want to; otherwise it is hidden by default. But this approach is a little clunky because you must **a**) know some HTML and **b**) include this for every chunk. 
+Let's face it---code takes up a lot of space in a document and large code chunks are not particularly pleasing to look at. You may encounter situations where you both want the code available on a page *but* you also want to hide the code. For this we use a technique called ***code folding***. Near the bottom of [Lesson 0](https://stri-con.github.io/data-curation/2020/03/28/lesson-0/), I used some simple HTML to make a section that folds the R code for the Clifford Attractor. There is a little `Show/hide` button that allows you to look at the code if you want to; otherwise it is hidden by default. But this approach is a little clunky because you must **a**) know some HTML and **b**) include this for every chunk.
 
-R Markdown has a similar functionality for showing and hiding code but it only takes a single line of code added to the YAML header. Again, return to your YAML header and add the argument  `code_folding:` as a nested property of `html_document:`. Your two options for `code_folding:` are `show` and `hide`. 
+R Markdown has a similar functionality for showing and hiding code but it only takes a single line of code added to the YAML header. Again, return to your YAML header and add the argument  `code_folding:` as a nested property of `html_document:`. Your two options for `code_folding:` are `show` and `hide`.
 
 ```
 output:
@@ -457,17 +463,602 @@ output:
     code_folding: hide
 ```
 
-Once you add this to the YAML header, the drop down `Code` button in the upper right corner of the page should now include `Show All Code` and `Hide All Code`. This allows the user to specify how they want to view the code in the document. Either property you set for `code_folding` will be the default state for the entire document. 
+Once you add this to the YAML header, the drop down `Code` button in the upper right corner of the page should now include `Show All Code` and `Hide All Code`. This allows the user to specify how they want to view the code in the document. Either property you set for `code_folding` will be the default state for the entire document.
 
-You should also notice that a new `Code` button appears next to every code chunk in your document. Again, if you want to exclude the code from individual chunks, just set `echo = FALSE` for that chunk and the code will not be included at all. 
+You should also notice that a new `Code` button appears next to every code chunk in your document. Again, if you want to exclude the code from individual chunks, just set `echo = FALSE` for that chunk and the code will not be included at all.
 
-> Add `code_folding:` argument to your YAML header and set a property value. 
+> Add `code_folding:` argument to your YAML header and set a property value.
 
 <br/>
 
-As far as I know there is no way of folding the *results* of a code chunk or folding indivudual chunks unless you use HTML. 
+As far as I know there is no way of folding the *results* of a code chunk or folding individual chunks unless you use HTML.
 
-That's all for this assignment. 
+That's all for this assignment.
+
+## Assignment 4: Graphics
+
+The last major piece of the puzzle is to add graphics to your R Markdown document. Think of this Assignment more as a mini guidebook and less as a to-do list of activities. The reason being, is that the topic of *graphics* is much too broad to cover in-depth during this course.
+
+For the sake of convenience, I will use ***figure*** to refer to any visual representation of data (chart, plot, graph, etc.) made with (R) code and *generated* when the document is rendered. An ***image*** on the other hand, is any external visual product *inserted* into the document, like a `png` or `jpg`.
+
+The distinction is that **figures** are *created* when the R Markdown document is rendered, and the R code is processed. In contrast, **images** are *added* to the rendered document by referencing a file.
+
+Let's look at an example that demonstrates the difference between a *figure* and an *image*. We can use the built-in `pressure` data set from the `datasets` package and the `plot` command to display a temperature-by-pressure plot. Here is the simple line of code followed by the figure that is created when the document is rendered.
+
+```{r plot_pressure, fig.cap="<small>***Figure** generated with R code and rendered in the final document.* </small>"}
+plot(pressure)
+```
+
+Basically, when I knit the R Markdown file (`.Rmd`) three things happen. First, `knitr` reads the code chunk, creates the plot, and saves the plot as a `.png` file. Next, knitr adds a line of code to the subsequent Markdown file (`.md`), which links to the `.png` file. Finally, PanDoc embeds the `.png` file into the HTML document. And just like that, I have a plot in my HTML document from a single line of R code.
+
+Now instead let's say I need to do some post-processing on the plot. I want the points to be larger and red, but I am too lazy to figure out how to code this in R (you should not be so lazy). I can use the same code to generate the plot in R but this time I will manually save the plot as a `png` file. I then make the modifications in a vector graphics program like [Inkscape](https://inkscape.org/), save the modified file, and then use  Markdown code in my `.Rmd` file to include the image in the final document. In this case, the plot is added directly to the HTML document by PanDoc rather than first being generated by knitr.
+
+```{r save_plot_pressure, results='hide'}
+# R code to create and save image
+png("files/pressure.png", width = 680, height = 500,
+    units = "px", pointsize = 16)
+plot(pressure)
+dev.off()
+```
+
+```
+# Markdown code in the Rmd file to add an image.
+![](files/pressure_modified.png)
+```
+
+![](files/pressure_modified.png)
+
+<small>***Image** added to the rendered document by referencing a file using Mardown.* </small>
+
+Of course, you can add any image you want. The image *does not* need to be generated by R code or be a `png`. For example, here is a [Girih tile](https://en.wikipedia.org/wiki/Girih_tiles) mosaic I made using the online tool [Girih Designer](https://girihdesigner.com/).
+
+```
+![](files/girih.jpg)
+```
+
+<br/>
+
+![](files/girih.jpg)
+
+*Girih tiles are a set of regular polygons (with overlaid strapwork) used in medieval Islamic architecture. Check out this cool [Science paper](http://www.physics.rutgers.edu/~pchandra/physics601/Lu_Steinhardt.pdf) from 2007 that explores the geometry behind Girih tiles.*
+
+<br/>
+
+> It is important to understand the distinction between code-generated *figures*  vs. imported *images*. You need different tools to display and control each type of graphic.
+
+> ##### Your goal for this Assignment is to add *figures* and *images* to your R Markdown page.
+
+Check out this blog post from ZevRoss on [Tips and tricks for working with images and figures in R Markdown documents](https://www.zevross.com/blog/2017/06/19/tips-and-tricks-for-working-with-images-and-figures-in-r-markdown-documents/#arguments-out.width-and-out.height-apply-to-both-existing-images-and-r-generated-figures). I reference this resource a lot.
+
+### Figures
+
+I think a lot about data visualization and in my opinion, it is one of the most important skills you can develop as you move forward with your own work.
+
+> *The simple graph has brought more information to the data analyst’s mind than any other device.* — John Tukey
+
+Almost any kind of data can be visualized and there are literally dozens and dozens of [figure types](https://www.r-graph-gallery.com/all-graphs.html) you can create with R code. This includes maps, networks, flow charts, dendrograms, and so on. In an HTML document, it is possible to create both static *and* interactive figures. However, data visualization in R is a broad topic and can often get quite complicated. In addition to the numerous chart types, there are many R packages you can use for visualizations. Some, like `ggplot2`, have [extensive functionality](http://r-statistics.co/Top50-Ggplot2-Visualizations-MasterList-R-Code.html) while others (e.g., [leaflet](https://rstudio.github.io/leaflet/)) are more appropriate for specific types of data and/or visualizations. Ultimately, the approach you choose will depend on your data and the type of message you want to convey.
+
+My point in saying this is that a comprehensive tutorial on data visualization in R is simply beyond the scope of this Assignment. If there is sufficient interest in particular packages and/or chart types I am happy to write a lesson plan. For now, I would like to focus on a few *best practices* and *strategies* that I think are important for creating visualization products using code in your R Markdown document. 
+
+1) Select an appropriate chart type to suite your needs.
+2) Whenever possible, always generate figures in your R Markdown document using (R) code.
+3) If you use color in your figures, pay special attention to your color palette.
+4) How to control the output.
+
+<br/>
+
+This list is far from comprehensive. There is a paper in PLoS Computational Biology from 2014 on [Ten Simple Rules for Better Figures](https://doi.org/10.1371/journal.pcbi.1003833), which provides a nice primer on the subject of figure design. 
+
+If you want to get deeper into visualization methods and techniques, beyond what we discuss here, I strongly encourage you to learn more about the work of [Edward Tufte](https://www.edwardtufte.com/tufte/), widely recognized as a pioneer in the field of data visualization.
+
+For some inspiration, I also recommend visiting [Martin Krzywinski](http://mkweb.bcgsc.ca/) data visualization site. The site itself is dense, but Martin's visualizations are incredible, and the site is updated often.
+
+<br/>
+
+#### 1. Select a chart type
+
+One of the first things to think about is what kind of chart you want to create. As I mentioned, this will depend on the type of data you have and the message you are trying to convey. There are different factors to consider when selecting a chart type and many online tools available to help narrow down your selection.
+
+<figure>
+  <a href="https://extremepresentation.typepad.com/files/choosing-a-good-chart-09.pdf">
+    <img src="files/choosing-a-good-chart-09.png" alt="W3Schools.com">
+  </a>
+  <figcaption><small><em>The original Chart Chooser designed and published by Andrew Abela. The Chart Chooser is a flowchart guide that helps you identify the type of chart that is appropriate to your data. Click on the image to download a PDF copy.</small></em></figcaption>
+</figure>
+
+<br/>
+
+The *Chart Chooser* was originally published in 2009 so it is a bit old now. But it can give you a good place to start when choosing a chart type. Cool Infographics by [Randy Krum](https://randykrum.com/) has a nice [DataViz page](https://coolinfographics.com/dataviz-guides) that provides a more up-to-date collection of data visualization chart choosers, reference guides, and cheat sheets.
+
+[Yan Holtz](https://www.yan-holtz.com/) has developed several websites dedicated to data visualization. These resources are **AMAZING** not to mention that his websites are beautiful. Please look at Yan's [From Data to Viz](https://www.data-to-viz.com/) page. This page is interactive and designed to help you choose the most appropriate chart for your data. It has links to the code, explanations, and common mistakes to avoid.
+
+> ##### Assignment: Spend time familiarizing yourself with different data visualization techniques and chart types. Think about your own data and data visualization needs.
+
+<br/>
+
+#### 2. Create your figure
+
+The next step is to write the code for your figure. Where possible, ***I highly recommend that you code all of your figures directly in the R Markdown document***. Coding your figures directly is beneficial for several reasons. By creating figures directly in an R Markdown document and including the code you can:
+
+* **Provide more reproducible & transparent workflows**. If you present a figure with the code *and* the underlying data, your readers can easily validate your findings.
+* **Help others**. Have you ever seen a graphic and wondered how it was created? By making the code available in your document, you help others create badass figures.
+* **Always remember**. How many times have you created a figure and then forgotten how you made it? Well, no more. Now your figures are directly tied to the code
+* **Reuse code blocks**. You may find yourself using the same chart type over and over in your work. Rather than rewriting the same code each time, you can reuse the code chunk.
+* **Easily make changes**. My goal is to code figures that are as close to production ready as possible. By that I mean creating figures that need little or no post-processing before going into a publication. If I need to change some part of a figure, I simply modify the code and re-render the document. This keep post-processing to a minimum.
+
+Here is an example of what I mean. On the left is the published version of an [NMDS plot](https://royalsocietypublishing.org/doi/10.1098/rspb.2019.2367#RSPB20192367F1) from a recent paper. On the right is the *raw* version of the plot generated with [R code only](https://github.com/projectdigest/web/blob/master/build/1_field_observations.Rmd#L126)---before any post-processing.
+
+| ![](files/fig-mod.png) | ![](files/fig-rcode.png)  |
+|:---:|:---:|
+| *PDF post-processed in [Inkscape](https://inkscape.org/)* | *R code only saved to PDF*  |
+
+I hope you agree that the differences between the two are minor. In the final version, I changed the location of the legend, moved some labels around for clarity, modified the font, and tweaked the vector overlays. Again, the goal is to code as much of the figure as possible, relying of vector graphics programs like Inkscape and Illustrator for *beautification only*.
+
+As I mentioned above, teaching and learning R code to generate figures is currently beyond the scope of this course. That said, I want you to explore the resources listed below. Doing so will give you a better sense of different chart types and the R code used to generate them. If you do not know much R, start by copying code and then playing around with different parameters. And **make sure you understand the default setting**. 
+
+> ##### Your Assignment is to select 2-3 different chart types and add the R code to your document. Ideally, you would use your own data but feel free to use the dummy data provided with the examples.
+
+If you have not used R to generate figures before, I highly recommend you first look at the [Tutorial on Graphs](https://tauanacunha.com/courses/2020_stri_introR/tutorials/l3_graphs/) from the *Introduction to R* course by Ernesto Bonadies, Lee Dietterich, Tauana Cunha, and Bruno de Medeiros. The tutorial covers some built-in R graphing functions as well as `ggplot2`. It's a great tutorial. 
+
+Remember, your visualization needs are particular to you and your needs. Find some charts that look interesting or useful and  add them to your document. Of course, I am more than happy to help you implement any type of graph in your document :)
+
+* Yan Holtz's [From Data to Viz](https://www.data-to-viz.com/) page.
+* [The R Graph Gallery](https://www.r-graph-gallery.com/index.html), a collection of charts made with  R. Charts are divided into several sections and each comes with chart with reproducible code. [Click here](https://www.r-graph-gallery.com/all-graphs.html) to see every chart on the site.
+* If you want to use other languages, similar pages are available for [D3.js](https://www.d3-graph-gallery.com/) (a JavaScript library) and [Python](https://python-graph-gallery.com/).
+
+* [r-statistics.co](http://r-statistics.co/) by Selva Prabhakaran has [Top 50 ggplot2 Visualizations](http://r-statistics.co/Top50-Ggplot2-Visualizations-MasterList-R-Code.html) (with full R Code).
+
+* [Leaflet](https://rstudio.github.io/leaflet/) is one of the most popular open-source JavaScript libraries for **interactive maps**. Code + Tutorials.
+
+<br/>
+
+#### 3. Color
+
+I want to turn now to the topic of *color*. A question to ask yourself is *do I need to use color in this figure?* If you are unsure, the answer is probably 'no'. High-contrast black and white graphics can be more readable than color and also better for copying and printing. So, if you don't *need* color then don't use it.
+
+[Edward Tufte](https://www.edwardtufte.com/tufte/) is fond of saying that color can be your best ally or your worst enemy. Color is an important visual dimension that can help tell a  compelling story. However, when it is not used correctly, color can be counterproductive and lead to confusion about the message a figure is trying to convey.
+
+In my field---microbial ecology---we often rely on color to display information about diversity. Microbial diversity is pretty vast, and it can be difficult to display all of this diversity in a single, static figure. All too often, people misuse color and the literature is full of figures that are very difficult to interpret. I thought about showing you some actual examples but felt that it would be a little mean-spirited. Instead, I made a figure using my own data to demonstrate this point. 
+
+Here, each bar represents a different sample and each color a different microbial Class.
+
+```{r bad_color, out.width="70%", echo=FALSE, fig.cap="<small>*Example of **color as an enemy**. This figure has way too many colors to convey a clear message. Unfortunately, figures like this are common in the literature*. </small>"}
+knitr::include_graphics("files/bad-color.png")
+```
+
+When you use too many colors you force your reader to continually go back and forth from the chart to the legend. This is annoying, confusing, and ultimately detracts from the meaning of the figure. 
+
+Another problem is that many of us have different abilities to perceive color and/or differences in color. [Color blindness](http://mkweb.bcgsc.ca/colorblind/index.mhtml#page-container), also known as color vision deficiency, is a decreased ability to see color or differences in color. When designing figures, it is important to use **a**) a relatively small color palette and **b**) a palette that is friendly to a variety of people. 
+
+For more information on the topic, I recommend reading Bang Wong’s Nature Methods paper, [Points of view: Color blindness](http://dx.doi.org/10.1038/nmeth.1618). Wong proposes a color-blind friendly color palette that uses contrasting colors that can be distinguished by a range of people. Consider that roughly 8% of people (mostly males) are color blind. So, what do you think? Do you want Keanu Reeves to understand your figures or not? If so, consider a color scheme that is friendly to all vision types
+
+Wong’s scheme is conservative---there are only 8 colors. Others have developed [12,13, and 15 color palette schemes](http://mkweb.bcgsc.ca/colorblind/palettes.mhtml#page-container) that offer more options than Wong's palette. Just be careful—--figures with too many colors can inhibit our ability to discern patterns. 
+
+Limited color palettes like these force us to be more careful when deciding what information to target or how many groups to display. For your consideration, I have included a few color-blind friendly color palettes. 
+
+```{r color_8_tab, echo=FALSE}
+text_tbl <- data.frame(
+  Color = c("_______", "_______", "_______", 
+            "_______", "_______", "_______", 
+            "_______", "_______"),
+  Name = c("black", "blue", "sky blue", "reddish purple", 
+           "bluish green", "vermillion", "orange", "yellow"),
+  HEX = c("#000000", "#0072B2", "#56B4E9", "#CC79A7", 
+              "#009E73", "#D55E00", "#E69F00", "#F0E442"),
+  RGB = c("0, 0, 0", "0, 114, 178", "86, 180, 233", 
+               "204, 121, 167", "0, 158, 115", "213, 94, 0", 
+               "230, 159, 0", "240, 228, 66")
+)
+
+text_tbl$Color <- cell_spec(text_tbl$Color, 
+                            format = "html", 
+                            background = c("#000000", 
+                                           "#0072B2", "#56B4E9", 
+                                           "#CC79A7", "#009E73", 
+                                           "#D55E00", "#E69F00", 
+                                           "#F0E442"), 
+                            background_as_tile = TRUE, font_size = 20)
+
+kable(text_tbl, escape = FALSE, caption = "CONSERVATIVE 8-COLOR PALETTE") %>%
+  kable_styling(bootstrap_options = c("bordered", "condensed"), 
+                full_width = F, position = "float_left", font_size = 14) %>%
+  column_spec(1, width = "6em", border_right = T) %>%
+  column_spec(2, bold = T, border_right = T, border_left = T) %>%
+  column_spec(3, bold = T, border_right = T) %>%
+  column_spec(4, bold = T, border_right = T)
+```
+
+```{r color_12_tab, echo=FALSE}
+text_tbl <- data.frame(
+  Color = c("_______", "_______", "_______", 
+            "_______", "_______", "_______", 
+            "_______", "_______", "_______", 
+            "_______", "_______", "_______"),
+  Name = c("dark grey", "jazzberry jam", "kepel", 
+           "light grey", "seance", "mariner", "capri", 
+           "pale plum", "saddle brown", "mars yellow", 
+           "fuego", "paris daisy"),
+  HEX = c("#323232", "#BF3465", "#50B29E", 
+              "#D9D9D9", "#731683", "#1C6CCC", 
+              "#21BCFF", "#DFA5E5", "#874310", 
+              "#DB6D1B", "#B8CE17", "#F4E345"),
+  RGB = c("50, 50, 50", "191, 52, 101", "80, 178, 158", 
+               "217, 217, 217", "115, 22, 131", "28, 108, 204", 
+               "33, 188, 255", "223, 165, 229", "135, 67, 16", 
+               "219, 109, 27", "184, 206, 23", "244, 227, 69")
+)
+
+text_tbl$Color <- cell_spec(text_tbl$Color, 
+                            format = "html", 
+                            background = c("#323232", "#BF3465", "#50B29E",
+                                           "#D9D9D9", "#731683", "#1C6CCC",
+                                           "#21BCFF", "#DFA5E5", "#874310",
+                                           "#DB6D1B", "#B8CE17", "#F4E345"),
+                            background_as_tile = TRUE, font_size = 20)
+
+kable(text_tbl, escape = FALSE, caption = "12-COLOR PALETTE") %>%
+  kable_styling(bootstrap_options = c("bordered", "condensed"), 
+                full_width = F, position = "right", font_size = 13) %>%
+  column_spec(1, width = "6em", border_right = T) %>%
+  column_spec(2, bold = T, border_right = T, border_left = T) %>%
+  column_spec(3, bold = T, border_right = T) %>%
+  column_spec(4, bold = T, border_right = T)
+```
+
+
+```{r color_13_tab, echo=FALSE}
+text_tbl <- data.frame(
+  Color = c("_______", "_______", "_______", 
+            "_______", "_______", "_______", 
+            "_______", "_______", "_______", 
+            "_______", "_______", "_______", 
+            "_______"),
+  Name = c("black", "blue lagoon", "seance", 
+           "science blue", "azure radiance", "blush pink", 
+           "bright turquoise", "shiraz", "salem", 
+           "salmon", "ronchi", "mint green", 
+           "dairy cream"),
+  HEX = c("#000000", "#006E82", "#8214A0", 
+              "#005AC8", "#00A0FA", "#FA78FA", 
+              "#14D2DC", "#AA0A3C", "#0A9B4B", 
+              "#FF825F", "#EAD644", "#A0FA82", 
+              "#FAE6BE"),
+  RGB = c("0, 0, 0", "0, 110, 130", "130, 20, 160", 
+               "0, 90, 200", "0, 160, 250", "250, 120, 250", 
+               "20, 210, 220", "170, 10, 60", "10, 155, 75", 
+               "255, 130, 95", "234, 214, 68", "160, 250, 130", 
+               "250, 230, 190")
+)
+text_tbl$Color <- cell_spec(text_tbl$Color, 
+                            format = "html", 
+                            background = c("#000000", "#006E82", 
+                                           "#8214A0", "#005AC8", "#00A0FA",
+                                           "#FA78FA", "#14D2DC", "#AA0A3C",
+                                           "#0A9B4B", "#FF825F", "#EAD644",
+                                           "#A0FA82", "#FAE6BE"),
+                            background_as_tile = TRUE, font_size = 20)
+
+kable(text_tbl, escape = FALSE, caption = "13-COLOR PALETTE") %>%
+  kable_styling(bootstrap_options = c("bordered", "condensed"), 
+                full_width = F, position = "float_left", font_size = 13) %>%
+  column_spec(1, width = "6em", border_right = T) %>%
+  column_spec(2, bold = T, border_right = T, border_left = T) %>%
+  column_spec(3, bold = T, border_right = T) %>%
+  column_spec(4, bold = T, border_right = T)
+```
+
+```{r color_15_tab, echo=FALSE}
+text_tbl <- data.frame(
+  Color = c("_______", "_______", "_______", 
+            "_______", "_______", "_______", 
+            "_______", "_______", "_______", 
+            "_______", "_______", "_______",
+            "_______", "_______", "_______"),
+  Name = c("black", "sherpa blue", "persian green", 
+           "hot pink", "cotton candy", "pigment indigo", 
+           "science blue", "heliotrope", "malibu", 
+           "french pass", "red berry", "brown", 
+           "mango tango", "harlequin", "laser lemon"),
+  HEX = c("#000000", "#004949", "#009292", 
+              "#ff6db6", "#ffb6db", "#490092", 
+              "#006ddb", "#b66dff", "#6db6ff", 
+              "#b6dbff", "#920000", "#924900", 
+              "#db6d00", "#24ff24", "#ffff6d"),
+  RGB = c("0, 0, 0", "0 73 73", "0 146 146", 
+               "255, 109, 182", "255, 182, 219", "73 0 146", 
+               "0, 109, 219", "182 109 255", "109, 182, 255", 
+               "182 216 255", "146, 0, 0", "146 73 0", 
+               "219, 109, 0", "36, 255, 36", "255, 255, 109")
+)
+
+text_tbl$Color <- cell_spec(text_tbl$Color, 
+                            format = "html", 
+                            background = c("#000000", "#004949", "#009292", 
+                                           "#ff6db6", "#ffb6db", "#490092", 
+                                           "#006ddb", "#b66dff", "#6db6ff", 
+                                           "#b6dbff", "#920000", "#924900", 
+                                           "#db6d00", "#24ff24", "#ffff6d"),
+                            background_as_tile = TRUE, font_size = 20)
+
+kable(text_tbl, escape = FALSE, caption = "15-COLOR PALETTE") %>%
+  kable_styling(bootstrap_options = c("bordered", "condensed"), 
+                full_width = F, position = "right", font_size = 12) %>%
+  column_spec(1, width = "6em", border_right = T) %>%
+  column_spec(2, bold = T, border_right = T, border_left = T) %>%
+  column_spec(3, bold = T, border_right = T) %>%
+  column_spec(4, bold = T, border_right = T)
+```
+
+Here is another great article on [Coloring for Colorblindness](https://davidmathlogic.com/colorblind/#%23000000-%23E69F00-%2356B4E9-%23009E73-%23F0E442-%230072B2-%23D55E00-%23CC79A7) by David Nichols that has an interactive color picker and recommendations for accessible palettes. 
+
+Remember, these are *only suggestions*. Ultimately, it is your choice how to use color and what palettes work best for you needs, I am merely offering some food for thought. Again, color and figure design are very broad---I encourage you to spend some time exploring these topics in more depth with the reference I provided. See where it takes you.  
+
+
+```{r color_121, fig.height=6, out.width = '60%', fig.align='center', comment='', fig.show='hold', eval=FALSE, echo=FALSE}
+# Wong palette
+wong_pal <- c("#009E73", "#D55E00", "#F0E442",
+                "#CC79A7", "#56B4E9", "#E69F00",
+                "#0072B2", "#7F7F7F", "#000000")
+show_col(wong_pal)
+
+twelve_pal <- c("#323232", "#BF3465", "#50B29E", 
+                "#D9D9D9", "#731683", "#1C6CCC", 
+                "#21BCFF", "#DFA5E5", "#874310", 
+                "#DB6D1B", "#B8CE17", "#F4E345")
+show_col(twelve_pal)
+
+thirteen_pal <- c("#000000", "#006E82", "#8214A0", 
+                  "#005AC8", "#00A0FA", "#FA78FA", 
+                  "#14D2DC", "#AA0A3C", "#0A9B4B", 
+                  "#FF825F", "#EAD644", "#A0FA82", 
+                  "#FAE6BE")
+show_col(thirteen_pal)
+
+fifteen_pal <- c("#000000", "#004949", "#009292", 
+              "#ff6db6", "#ffb6db", "#490092", 
+              "#006ddb", "#b66dff", "#6db6ff", 
+              "#b6dbff", "#920000", "#924900", 
+              "#db6d00", "#24ff24", "#ffff6d")
+show_col(fifteen_pal)
+```
+
+<br/>
+
+#### 4. Controlling the output
+
+The last thing we need to discuss is how to control the way your plot is rendered in the final document. Individual R packages have different options for controlling various aspects of a plot or chart including color, point size, line thickness, axis labels, etc. Again, this topic is beyond the scope of this lesson but let's look at an example anyway. We return to our simple example from above using the `plot` function with the `cars` data set. We can use different built-in options to modify the chart (*color added for demonstration purposes only*). 
+
+```{r out_1}
+plot(cars, main = "Plot Title", 
+     sub = "This is the plot subtitle", 
+     xlab = "temperature (C)", 
+     ylab = "pressure (Pa)", 
+     pch = 24, cex=1.5, col="red", bg="blue", lwd=2)
+```
+
+This code controls the plot *style* but not how the plot is rendered in the final document. By that I mean the *size* and *alignment* of the plot in the HTML document. To control these aspects, you will need to use various ***[code chunk options](https://yihui.org/knitr/options/#plots)***. Knowing how to code each chunk option and knowing what each does takes some practice. Let's look at a few of the most common options.
+
+* `fig.align`: ('character') Alignment of figures in the output document (possible values are `left`, `right` and `center`. *Note*, character values must be enclosed in **single quotation** marks like so: `'center'`.
+* `fig.width` and `fig.height`: (default are 7 and 5, respectively; numeric) Width and height of the plot (in inches). *Note* Only works with R-generated figures.
+* `fig.asp`: (default NULL; numeric) The aspect ratio of the plot, i.e. the ratio of height/width; when `fig.asp` is specified, the height of a plot (the chunk option `fig.height`) is calculated from `fig.width` X `fig.asp`
+* `fig.dim`: (default NULL; numeric) Numeric vector of length 2, it gives `fig.width` and `fig.height`, e.g., `fig.dim` = c(5, 7) is a shorthand of `fig.width` = 5, `fig.height` = 7; if both `fig.asp` and `fig.dim` are provided, `fig.asp` will be ignored (with a warning)
+* `out.width`, `out.height`: (NULL; character OR numeric) Width and height of the plot in the final output file (can be different with its real `fig.width` and `fig.height`, i.e. plots can be scaled in the output document). For example, as a percent `out.width = '80%` or in pixels `out.width = 600px`. 
+* `fig.cap`: (NULL; character) Figure caption to be used. *Note*, character values must be enclosed in **single quotation** marks like so: `'This is a figure caption'`.
+
+OK, let's use  chunk options to change the size and alignment and add a caption. I will hide the R code since it is the same as above. If you want to see the chunk options you need to look at the raw `.Rmd` file on the [GitHub repo](https://github.com/stri-con/dc-single/blob/master/index.Rmd). 
+
+```{r out_2, fig.align='center', fig.width=8, fig.height=4, fig.cap='This is a figure caption.', echo=FALSE}
+plot(cars, main = "Plot Title", 
+     xlab = "temperature (C)", 
+     ylab = "pressure (Pa)", 
+     pch = 24, cex=1.5, col="red", bg="blue", lwd=2)
+```
+
+If you want to display multiple figures side-by-side, you need to set `fig.show='hold'`. This chunk option  holds all plots and outputs them at the very end of a code chunk, as opposed to printing them one by one. You also need to set `out.width` equal to a percent value divided by the number of plots. For example, suppose we want to display three plots side-by-side, we need to set `out.width='33%'`.
+
+````
+```{r grid, fig.show='hold', out.width='33%'}`r ''`
+p1 <- plot(pressure)
+p2 <- plot(cars)
+p3 <- plot(pressure)
+```
+````
+
+```{r grid, echo=FALSE, fig.show='hold', out.width='33%'}
+p1 <- plot(pressure)
+p2 <- plot(cars)
+p3 <- plot(pressure)
+```
+
+There are more sophisticated ways to display multiple figures using something like `grid.arrange` (from the `gridExtra` package) or `plot_grid` (from the `cowplot` package). I encourage you to look at these packages. 
+
+Play around with these options to see how it affects the final output. Chunk options for figures can be confusing at times but you will get the hang of it with a bit of practice. 
+
+That is all I have to say about figures. Again, this is a broad topic and I suggest you look around to see what is possible. If there is something specific you want to do please post it to the Slack channel. 
+
+### Images
+
+The other type of graphic you may want to use is an image---any externally generated visual product *inserted* into the document, like a `png` or `jpg`.  When plots are not generated with R code, there is no way for `knitr` to capture plots automatically. In this case, you may generate the images manually and then pass their file paths to some other function to include these images in the output. Don't worry, this section is not long. First I want to cover a few best practices and then go over different ways of displaying and controlling images. 
+
+#### Best practices
+
+In R Markdown, you can use GIF (Graphic Interchange Format) for simple animations or SVG (Scalable Vector Graphics) for things like logos and maps. These file types are used in special situations and will not be covered here. By far the easiest file types to work with in R Markdown for static images are PNG (Portable Network Graphics) and JPG/JPEG (Joint Photographic Experts Group). There are really no strict rules for when you should use PNG vs. JPG. ***Generally*** speaking though:
+
+* **PNG** is usually better for graphics like charts & graphs, images with text, anything with high contrast colors, or for images that contain less color data. The other advantage is that unlike JPG, PNG format supports a transparent background. PNGs are also better for screenshots. 
+* **JPG** is usually better for high color and photographs. Another advantage is the it is easier to reduce file sizes without compromising quality. However, JPG does not support transparent background.
+
+Another thing to consider is *image compression*. Nothing slows down a website more than a bulky image. So always compress your images before adding them to your website. There are a [ton of online and standalone compression tools](https://blog.templatetoaster.com/best-image-compression-tools/) available for compression. I use the tools from [WebsitePlanet](https://www.websiteplanet.com/webtools/imagecompressor/) and [Optimizilla](https://imagecompressor.com/). Honestly, I haven't spent a ton of time comparing tools, but I want you to find a couple that work for you. 
+
+> If you plan on working a lot with images, I strongly encourage you to get familiar with the different file types and compression options.
+
+#### Adding images in R Markdown
+
+I would like to cover three basic methods to add images to an R Markdown document. 
+
+1) Markdown
+2) `knitr::include_graphics`
+3) The `magick` package
+
+<br/>
+
+#### 1. Markdown code
+
+Markdown syntax is the easiest way to add an image, however you sacrifice control because there are very few options. I demonstrated the Markdown syntax way back at the beginning of this assignment but at this point it's probably a distant memory. So, let's review. The syntax is simple. Start a new line with an `!`, followed by open and closed brackets (`[]`), and then the *relative* file path, like so:
+
+```
+![](files/julia.png)
+```
+
+![](files/julia.png)
+<small><em>Image of a [Julia  set](https://en.wikipedia.org/wiki/Julia_set), an [iterated function system](https://en.wikipedia.org/wiki/Iterated_function_system) generated using the equation $f_{c}(z)=z^{2}+c$ where $c$ is a complex number, in this case $c=-0.7269 + 0.1889i$. [Downloaded](https://commons.wikimedia.org/wiki/File:Julia_-0.7269_0.1889.png) from Wikimedia Commons, created by [IkamusumeFan](https://commons.wikimedia.org/wiki/User:IkamusumeFan), and licensed under [CC-BY-SA-4.0](https://commons.wikimedia.org/wiki/Category:CC-BY-SA-4.0).</em></small>
+
+<br/>
+
+You can also display  multiple images side-by-side using Markdown. In this case, you must specify the  width of an image (where $width \leq 100/n$ & $n = no. of images$) and put the Markdown code for each image on the same line (no space between the two tags).
+
+<br/>
+
+```
+![](files/julia.png){width=50%}![](files/julia2.png){width=50%}
+```
+
+![](files/julia.png){width=50%}![](files/julia2.png){width=50%}
+<small><em>Two different Julia sets. The image on the right ($c = −0.835 − 0.2321i$) was [downloaded](https://en.wikipedia.org/wiki/File:Julia_-0.835_-0.2321.png) from Wikimedia Commons, created by [Simpsons_contributor](https://en.wikipedia.org/wiki/User:Simpsons_contributor), and released under the [public domain](https://en.wikipedia.org/wiki/en:public_domain).</em></small>
+
+We can also use Markdown code to include an image directly from a URL. 
+
+```
+![](https://upload.wikimedia.org/wikipedia/commons/0/0a/Subsection_Bifurcation_Diagram_Logistic_Map.png)
+```
+
+![](https://upload.wikimedia.org/wikipedia/commons/0/0a/Subsection_Bifurcation_Diagram_Logistic_Map.png){width=85%}
+
+<small><em> A chaotic region from the [bifurcation diagram](https://en.wikipedia.org/wiki/Bifurcation_diagram) of the [logistic map](https://en.wikipedia.org/wiki/Logistic_map), derived by iterating the equation $x_{n+1} = rx(1-x_n)$ over all values for $r[0,4]$. The map was popularized in a paper by the biologist [Robert May](https://en.wikipedia.org/wiki/Robert_May,_Baron_May_of_Oxford) entitled [Simple mathematical models with very complicated dynamics](http://www.ms.uky.edu/~ma137/Spring16/May_Logistic.pdf). Image by InXnI and licensed under [CC0](http://creativecommons.org/publicdomain/zero/1.0/deed.en). [Original](https://commons.wikimedia.org/wiki/File:Subsection_Bifurcation_Diagram_Logistic_Map.png).</em></small>
+
+<br/>
+
+The issue with using Markdown code for images is that there are few options. It is difficult to make modifications without using HTML and CSS. 
+
+<br/>
+
+#### 2. `knitr::include_graphics`
+
+If you want a bit more control over the output you can use a built-in `knitr` function called `include_graphics`. The major advantage of this function is that it is portable, meaning that it works for all document formats that `knitr` supports. That way you do not need to use different syntax for different document types to embed an external image. Since we use `include_graphics` within a chunk, several chunk options are available for controlling the output. Go to your console window in RStudio and type `?knitr::include_graphics` to see the help menu. As you can see, there are very few options. Most of the control will come from using chunk options. 
+
+*Note*, the double colon (`::`) in this command specifies the exact function from that specific package. This prevents any problems from arising if another package also has the same function name. I am not aware of any other packages that have the function `include_graphics` but the convention I have seen is the `knitr::include_graphics` so I will use that here. It is up to you whether or not you want to use the double colon. 
+
+> It is important to note that some of the chunk options we used for figures ***will not work*** for images. 
+
+Specifically, `fig.width`, `fig.height`, and `fig.dim` do not work with images. To control the size, we need to use `out.width` and `out.height`. Remember, `out.width` and `out.height` need either a *character* (e.g., `'50%'`) OR a *numeric* (`600px`) value. We also have access to `fig.align` for placement and `fig.cap` to add a caption. Here is a code chunk using `knitr::include_graphics`.
+
+````
+```{r cave1, fig.cap="INSERT CAPTION.", out.width = '100%', fig.align='left'}`r ''`
+knitr::include_graphics("files/cave.jpg")
+```
+````
+
+```{r cave, fig.cap="*The Great Hall of Polychromes, [Cave of Altamira](https://en.wikipedia.org/wiki/Cave_of_Altamira), published by M. Sanz de Sautuola in 1880 ([original](https://commons.wikimedia.org/wiki/File:Altamira-1880.jpg)) licensed under the [public domain](https://en.wikipedia.org/wiki/Public_domain)*.", out.width = '100%', fig.align='left', echo=FALSE}
+knitr::include_graphics("files/cave.jpg")
+```
+
+As we did above when we displayed figures side-by-side, we can do the same with images and the `include_graphics` function. Here again we `fig.show='hold'` and specify the `out.width`. We use the `c` function to combine values---in this case image file names---into a list. This is analogous to the Markdown syntax we used above fir displaying images side-by-side.
+
+````
+```{r cave_rock, out.width='50%', fig.cap="INSERT CAPTION", fig.show='hold', fig.align='left'}`r ''`
+knitr::include_graphics(c("files/cave.jpg","files/rock.jpg"))
+```
+````
+
+```{r, echo=FALSE, out.width='50%', out.height="40%", fig.show='hold', fig.align='left', fig.cap="<small><em>The Great Hall of Polychromes (right) & rock painting of [Mimi spirits](https://en.wikipedia.org/wiki/Mimi_(folklore)) from [Kakadu National Park](https://commons.wikimedia.org/wiki/Kakadu_National_Park). [Original](https://en.wikipedia.org/wiki/Nourlangie_Rock#/media/File:Anbangbang_gallery_Mimi_rock_art_cropped.jpg) licensed under [CC BY-SA 2.5](https://creativecommons.org/licenses/by-sa/2.5) by Dustin M. Ramsey ([Kralizec!](https://en.wikipedia.org/wiki/User:Kralizec!)).</em></small>"}
+knitr::include_graphics(c("files/cave.jpg","files/rock.jpg"))
+```
+
+As we did with Markdown, we can also use `knitr::include_graphics` to add an image directly from the web. 
+
+```{r add_web_image,fig.align='center',  out.height=400, fig.cap="<small><em>The Hummingbird (part of the [Nazca Lines](https://en.wikipedia.org/wiki/Nazca_Lines)) by [Diego Delso](https://commons.wikimedia.org/wiki/User:Poco_a_poco) licensed under [CC BY-SA](https://creativecommons.org/licenses/by-sa/4.0/).</em></small>"}
+knitr::include_graphics("https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/L%C3%ADneas_de_Nazca%2C_Nazca%2C_Per%C3%BA%2C_2015-07-29%2C_DD_52.JPG/1024px-L%C3%ADneas_de_Nazca%2C_Nazca%2C_Per%C3%BA%2C_2015-07-29%2C_DD_52.JPG")
+```
+
+<br/>
+
+#### 3. The `magick` package: Advanced image-processing in R
+
+The `magick` package is designed to modernize and simplify high-quality image processing in R by wrapping the [ImageMagick STL](https://www.imagemagick.org/Magick++/STL.html). First, install `magick` in R using this command:
+
+```
+install.packages("magick")
+```
+
+Then add this to your setup code chunk:
+
+```
+library(magick)
+```
+
+I will highlight just a few of the options available in the `magick` package, but please know this package has a lot of functionality. Much of what we controlled above with chunk options (e.g., `out.width`) can instead be controlled directly with `magick`. In addition, you can edit images, add text annotation, include filters and effects, animate, overlay images, etc. This package is definitely worth learning, especially if you plan to work with images. 
+
+I will  *not use any code chunk options* to control the behavior of the image so I can demonstrate some of the `magick` functionality. For this demonstration I will use an image of the [wings of a female Blue-Spotted Hawker, *Adversaeschna brevistyla*](https://commons.wikimedia.org/wiki/File:Adversaeschna_brevistyla_female_wings_(12561106003).jpg) by [Jogn Tann](https://www.flickr.com/people/31031835@N08) licensed under [CC BY 2.0](https://creativecommons.org/licenses/by/2.0/deed.en). For this demonstration the `jpg` was converted to `png` using [JPG to PNG](https://jpg2png.com/) then imported to [Gimp](https://www.gimp.org/) where I cropped the imaged and made the background transparent. 
+OK. Displaying an image is easy using the `image_read` command. I will  set the variable `wings` so I can manipulate the image later on without needing to call the path. We can use the `print` command to get some details about the image. If you do not plan to make any changes you can simply run the command without the variable name.
+
+```{r wings}
+# image_read("files/wings.png") Uncomment to render the image directly.
+wings <- image_read("files/wings.png")
+print(wings)
+```
+
+This image is much larger than the page so knitr resized it to fit in the page container. 
+
+How about changing the background color and adding a border? This is an example of stringing together multiple commands. Cool. 
+
+```{r wings_color}
+image_border(image_background(wings, "#56B4E9"), "#141414", "50x30")
+```
+
+We can also flip the image and resize proportionally to height of 200px. 
+
+```{r wings_flip, fig.align='center'}
+image_scale(image_flip(wings), "x200")
+```
+
+Every time we call an `image_`-like command, `magick` will print the image. So, unless we want a bunch of images we need to assign a variable each time we use an `image_` command. Then we can simply call the variable to print the image.
+
+How about we make a *set of wings*? To do this, I will:
+
+1) Read in the `wings.png` file. These are the right-side wings. 
+2) Scale the image (remember the file is really big).
+3) Crop the image because there is a lot of white space. 
+4) Copy the modified image and reflect it around the vertical axis to make left-side wings. 5) Combine the images to make a wing set. 
+
+First I read in the file and assign it to the variable `right`. Next, I scale the image using the `image_scale` command. Notice I set the dimensions to `x400`. This means resize proportionally to height of 200px. If I wanted to resize proportionally to width I would write it like this, `400`. 
+
+```{r wings_read}
+right <- image_read("files/wings.png")
+right <- image_scale(right, "x400")
+```
+
+Now I will crop the image with `image_crop`. This was a bit of a pain, but basically I left the height the same by specifying `x400` and then set cropped 150px off the left of the image. You really just need to play around with this to get it right.
+
+```{r wings_crop}
+right <- image_crop(right, "x400+150")
+left <- image_flop(right)
+```
+
+Finally, I use the `c` command to combine the variables into a list and then use `image_append` to print them side-by-side. Now we have a set of wings.  
+
+```{r wings_pair}
+img <- c(left, right)
+image_append(img)
+```
+
+<br/>
+
+> ##### Your Assignment is to work through the [magick tutorial](https://cran.r-project.org/web/packages/magick/vignettes/intro.html) and use `magick` in your document.
+
+If you have a pretty big document already, I recommend starting a new dummy document for this tutorial. That way you can make changes and render the document more quickly. Work with JPG files, PNG files with a transparent background, and SVGs. You can also use the `magick` package with R code generated figures so play with that too. **Learn this package**. 
+
+***
+
+That's all for this Assignment and for Lesson 2. You should now have all the big pieces you need to make an awesome, single-page, R Markdown document.
 
 ## Session Info
 

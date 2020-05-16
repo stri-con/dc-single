@@ -1,0 +1,62 @@
+@import url('https://fonts.googleapis.com/css?family=PT+Sans|PT+Serif|Roboto:300');
+
+
+body {
+  font-family: "PT Serif", serif;
+  color: #414141;
+  line-height: 1.7;
+  font-size: 18px;
+  background-color: #FCFCFC;
+}
+
+/* Headers */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: Roboto, "PT Sans", sans-serif;
+}
+/* Headers */
+
+
+h1 {
+  font-size: 2.1em;
+  text-align: center;
+}
+
+h2 {
+  font-size: 1.9em;
+  text-align: center;
+  overflow: hidden;
+  page-break-before: always;
+  display:block;
+  padding-bottom: 0.5em;
+}
+
+h3 {
+  font-size: 1.6em;
+}
+
+h4 {
+  font-size: 1.4em;
+  margin-bottom: 0.2em;
+}
+
+h5 {
+  font-size: 1.2em;
+}
+
+h6 {
+  font-size: 1.1em;
+}
+
+code,
+kbd,
+pre,
+samp,
+.sourceLine,
+.sourceCode {
+  font-family: 'Monaco', 'PT Mono', monospace;
+}
