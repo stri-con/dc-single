@@ -1,0 +1,9 @@
+Name	HEX	RGB
+black	#000000	0, 0, 0
+blue	#0072B2	0, 114, 178
+sky blue	#56B4E9	86, 180, 233
+reddish purple	#CC79A7	204, 121, 167
+bluish green	#009E73	0, 158, 115
+vermillion	#D55E00	213, 94, 0
+orange	#E69F00	230, 159, 0
+yellow	#F0E442	240, 228, 66

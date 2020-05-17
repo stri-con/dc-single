@@ -1,0 +1,14 @@
+Name	HEX	RGB
+black	#000000	0, 0, 0
+blue lagoon	#006E82	0, 110, 130
+seance	#8214A0	130, 20, 160
+science blue	#005AC8	0, 90, 200
+azure radiance	#00A0FA	0, 160, 250
+blush pink	#FA78FA	250, 120, 250
+bright turquoise	#14D2DC	20, 210, 220
+shiraz	#AA0A3C	170, 10, 60
+salem	#0A9B4B	10, 155, 75
+salmon	#FF825F	255, 130, 95
+ronchi	#EAD644	234, 214, 68
+mint green	#A0FA82	160, 250, 130
+dairy cream	#FAE6BE	250, 230, 190

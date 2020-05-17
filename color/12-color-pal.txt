@@ -1,0 +1,13 @@
+Name	HEX	RGB
+dark grey	#323232	50, 50, 50
+jazzberry jam	#BF3465	191, 52, 101
+kepel	#50B29E	80, 178, 158
+light grey	#D9D9D9	217, 217, 217
+seance	#731683	115, 22, 131
+mariner	#1C6CCC	28, 108, 204
+capri	#21BCFF	33, 188, 255
+pale plum	#DFA5E5	223, 165, 229
+saddle brown	#874310	135, 67, 16
+mars yellow	#DB6D1B	219, 109, 27
+fuego	#B8CE17	184, 206, 23
+paris daisy	#F4E345	244, 227, 69

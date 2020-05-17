@@ -659,7 +659,7 @@ text_tbl$Color <- cell_spec(text_tbl$Color,
                                            "#F0E442"), 
                             background_as_tile = TRUE, font_size = 20)
 
-kable(text_tbl, escape = FALSE, caption = "[CONSERVATIVE 8-COLOR PALETTE](files/8-color-pal.txt)") %>%
+kable(text_tbl, escape = FALSE, caption = "[CONSERVATIVE 8-COLOR PALETTE](color/8-color-pal.txt)") %>%
   kable_styling(bootstrap_options = c("bordered", "condensed"), 
                 full_width = F, position = "float_left", font_size = 14) %>%
   column_spec(1, width = "6em", border_right = T) %>%
@@ -697,7 +697,7 @@ text_tbl$Color <- cell_spec(text_tbl$Color,
                                            "#DB6D1B", "#B8CE17", "#F4E345"),
                             background_as_tile = TRUE, font_size = 20)
 
-kable(text_tbl, escape = FALSE, caption = "[12-COLOR PALETTE](files/12-color-pal.txt)") %>%
+kable(text_tbl, escape = FALSE, caption = "[12-COLOR PALETTE](color/12-color-pal.txt)") %>%
   kable_styling(bootstrap_options = c("bordered", "condensed"), 
                 full_width = F, position = "right", font_size = 13) %>%
   column_spec(1, width = "6em", border_right = T) %>%
@@ -739,7 +739,7 @@ text_tbl$Color <- cell_spec(text_tbl$Color,
                                            "#A0FA82", "#FAE6BE"),
                             background_as_tile = TRUE, font_size = 20)
 
-kable(text_tbl, escape = FALSE, caption = "[13-COLOR PALETTE](files/13-color-pal.txt)") %>%
+kable(text_tbl, escape = FALSE, caption = "[13-COLOR PALETTE](color/13-color-pal.txt)") %>%
   kable_styling(bootstrap_options = c("bordered", "condensed"), 
                 full_width = F, position = "float_left", font_size = 13) %>%
   column_spec(1, width = "6em", border_right = T) %>%
@@ -781,7 +781,7 @@ text_tbl$Color <- cell_spec(text_tbl$Color,
                                            "#db6d00", "#24ff24", "#ffff6d"),
                             background_as_tile = TRUE, font_size = 20)
 
-kable(text_tbl, escape = FALSE, caption = "[15-COLOR PALETTE](files/15-color-pal.txt)") %>%
+kable(text_tbl, escape = FALSE, caption = "[15-COLOR PALETTE](color/15-color-pal.txt)") %>%
   kable_styling(bootstrap_options = c("bordered", "condensed"), 
                 full_width = F, position = "right", font_size = 12) %>%
   column_spec(1, width = "6em", border_right = T) %>%

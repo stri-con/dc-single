@@ -1367,7 +1367,7 @@ Wong’s scheme is conservative---there are only 8 colors. Others have developed
 Limited color palettes like these force us to be more careful when deciding what information to target or how many groups to display. For your consideration, I have included a few color-blind friendly color palettes. You can download these colors as plain text by clicking on the palette title. 
 
 <table class="table table-bordered table-condensed" style="font-size: 14px; width: auto !important; float: left; margin-right: 10px;">
-<caption style="font-size: initial !important;">[CONSERVATIVE 8-COLOR PALETTE](files/8-color-pal.txt)</caption>
+<caption style="font-size: initial !important;">[CONSERVATIVE 8-COLOR PALETTE](color/8-color-pal.txt)</caption>
  <thead>
   <tr>
    <th style="text-align:left;"> Color </th>
@@ -1430,7 +1430,7 @@ Limited color palettes like these force us to be more careful when deciding what
 
 
 <table class="table table-bordered table-condensed" style="font-size: 13px; width: auto !important; margin-right: 0; margin-left: auto">
-<caption style="font-size: initial !important;">[12-COLOR PALETTE](files/12-color-pal.txt)</caption>
+<caption style="font-size: initial !important;">[12-COLOR PALETTE](color/12-color-pal.txt)</caption>
  <thead>
   <tr>
    <th style="text-align:left;"> Color </th>
@@ -1517,7 +1517,7 @@ Limited color palettes like these force us to be more careful when deciding what
 
 
 <table class="table table-bordered table-condensed" style="font-size: 13px; width: auto !important; float: left; margin-right: 10px;">
-<caption style="font-size: initial !important;">[13-COLOR PALETTE](files/13-color-pal.txt)</caption>
+<caption style="font-size: initial !important;">[13-COLOR PALETTE](color/13-color-pal.txt)</caption>
  <thead>
   <tr>
    <th style="text-align:left;"> Color </th>
@@ -1609,7 +1609,7 @@ Limited color palettes like these force us to be more careful when deciding what
 </table>
 
 <table class="table table-bordered table-condensed" style="font-size: 12px; width: auto !important; margin-right: 0; margin-left: auto">
-<caption style="font-size: initial !important;">[15-COLOR PALETTE](files/15-color-pal.txt)</caption>
+<caption style="font-size: initial !important;">[15-COLOR PALETTE](color/15-color-pal.txt)</caption>
  <thead>
   <tr>
    <th style="text-align:left;"> Color </th>

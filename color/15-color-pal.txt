@@ -1,0 +1,16 @@
+Name	HEX	RGB
+black	#000000	0, 0, 0
+sherpa blue	#004949	0 73 73
+persian green	#009292	0 146 146
+hot pink	#ff6db6	255, 109, 182
+cotton candy	#ffb6db	255, 182, 219
+pigment indigo	#490092	73 0 146
+science blue	#006ddb	0, 109, 219
+heliotrope	#b66dff	182 109 255
+malibu	#6db6ff	109, 182, 255
+french pass	#b6dbff	182 216 255
+red berry	#920000	146, 0, 0
+brown	#924900	146 73 0
+mango tango	#db6d00	219, 109, 0
+harlequin	#24ff24	36, 255, 36
+laser lemon	#ffff6d	255, 255, 109
