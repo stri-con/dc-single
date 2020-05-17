@@ -634,7 +634,7 @@ For more information on the topic, I recommend reading Bang Wong’s Nature Meth
 
 Wong’s scheme is conservative---there are only 8 colors. Others have developed [12,13, and 15 color palette schemes](http://mkweb.bcgsc.ca/colorblind/palettes.mhtml#page-container) that offer more options than Wong's palette. Just be careful—--figures with too many colors can inhibit our ability to discern patterns. 
 
-Limited color palettes like these force us to be more careful when deciding what information to target or how many groups to display. For your consideration, I have included a few color-blind friendly color palettes. 
+Limited color palettes like these force us to be more careful when deciding what information to target or how many groups to display. For your consideration, I have included a few color-blind friendly color palettes. You can download these colors as plain text by clicking on the palette title. 
 
 ```{r color_8_tab, echo=FALSE}
 text_tbl <- data.frame(
@@ -659,7 +659,7 @@ text_tbl$Color <- cell_spec(text_tbl$Color,
                                            "#F0E442"), 
                             background_as_tile = TRUE, font_size = 20)
 
-kable(text_tbl, escape = FALSE, caption = "CONSERVATIVE 8-COLOR PALETTE") %>%
+kable(text_tbl, escape = FALSE, caption = "[CONSERVATIVE 8-COLOR PALETTE](files/8-color-pal.txt)") %>%
   kable_styling(bootstrap_options = c("bordered", "condensed"), 
                 full_width = F, position = "float_left", font_size = 14) %>%
   column_spec(1, width = "6em", border_right = T) %>%
@@ -667,6 +667,7 @@ kable(text_tbl, escape = FALSE, caption = "CONSERVATIVE 8-COLOR PALETTE") %>%
   column_spec(3, bold = T, border_right = T) %>%
   column_spec(4, bold = T, border_right = T)
 ```
+
 
 ```{r color_12_tab, echo=FALSE}
 text_tbl <- data.frame(
@@ -696,7 +697,7 @@ text_tbl$Color <- cell_spec(text_tbl$Color,
                                            "#DB6D1B", "#B8CE17", "#F4E345"),
                             background_as_tile = TRUE, font_size = 20)
 
-kable(text_tbl, escape = FALSE, caption = "12-COLOR PALETTE") %>%
+kable(text_tbl, escape = FALSE, caption = "[12-COLOR PALETTE](files/12-color-pal.txt)") %>%
   kable_styling(bootstrap_options = c("bordered", "condensed"), 
                 full_width = F, position = "right", font_size = 13) %>%
   column_spec(1, width = "6em", border_right = T) %>%
@@ -738,7 +739,7 @@ text_tbl$Color <- cell_spec(text_tbl$Color,
                                            "#A0FA82", "#FAE6BE"),
                             background_as_tile = TRUE, font_size = 20)
 
-kable(text_tbl, escape = FALSE, caption = "13-COLOR PALETTE") %>%
+kable(text_tbl, escape = FALSE, caption = "[13-COLOR PALETTE](files/13-color-pal.txt)") %>%
   kable_styling(bootstrap_options = c("bordered", "condensed"), 
                 full_width = F, position = "float_left", font_size = 13) %>%
   column_spec(1, width = "6em", border_right = T) %>%
@@ -780,7 +781,7 @@ text_tbl$Color <- cell_spec(text_tbl$Color,
                                            "#db6d00", "#24ff24", "#ffff6d"),
                             background_as_tile = TRUE, font_size = 20)
 
-kable(text_tbl, escape = FALSE, caption = "15-COLOR PALETTE") %>%
+kable(text_tbl, escape = FALSE, caption = "[15-COLOR PALETTE](files/15-color-pal.txt)") %>%
   kable_styling(bootstrap_options = c("bordered", "condensed"), 
                 full_width = F, position = "right", font_size = 12) %>%
   column_spec(1, width = "6em", border_right = T) %>%
