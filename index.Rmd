@@ -790,30 +790,38 @@ kable(text_tbl, escape = FALSE, caption = "[15-COLOR PALETTE](color/15-color-pal
   column_spec(4, bold = T, border_right = T)
 ```
 
+If you want to create your own color palette (say based on Wong's colors) you would write the code like this. Then you could pass the character string `wong_pal` to any place you need a color palette.
+
+```{r make_color_pal}
+wong_pal <- c("#009E73", "#D55E00", "#F0E442",
+                "#CC79A7", "#56B4E9", "#E69F00",
+                "#0072B2", "#7F7F7F", "#000000")
+
+```
+
 Here is another great article on [Coloring for Colorblindness](https://davidmathlogic.com/colorblind/#%23000000-%23E69F00-%2356B4E9-%23009E73-%23F0E442-%230072B2-%23D55E00-%23CC79A7) by David Nichols that has an interactive color picker and recommendations for accessible palettes. 
 
 Remember, these are *only suggestions*. Ultimately, it is your choice how to use color and what palettes work best for you needs, I am merely offering some food for thought. Again, color and figure design are very broad---I encourage you to spend some time exploring these topics in more depth with the reference I provided. See where it takes you.  
-
 
 ```{r color_121, fig.height=6, out.width = '60%', fig.align='center', comment='', fig.show='hold', eval=FALSE, echo=FALSE}
 # Wong palette
 wong_pal <- c("#009E73", "#D55E00", "#F0E442",
                 "#CC79A7", "#56B4E9", "#E69F00",
                 "#0072B2", "#7F7F7F", "#000000")
-show_col(wong_pal)
+#show_col(wong_pal)
 
 twelve_pal <- c("#323232", "#BF3465", "#50B29E", 
                 "#D9D9D9", "#731683", "#1C6CCC", 
                 "#21BCFF", "#DFA5E5", "#874310", 
                 "#DB6D1B", "#B8CE17", "#F4E345")
-show_col(twelve_pal)
+#show_col(twelve_pal)
 
 thirteen_pal <- c("#000000", "#006E82", "#8214A0", 
                   "#005AC8", "#00A0FA", "#FA78FA", 
                   "#14D2DC", "#AA0A3C", "#0A9B4B", 
                   "#FF825F", "#EAD644", "#A0FA82", 
                   "#FAE6BE")
-show_col(thirteen_pal)
+#show_col(thirteen_pal)
 
 fifteen_pal <- c("#000000", "#004949", "#009292", 
               "#ff6db6", "#ffb6db", "#490092", 

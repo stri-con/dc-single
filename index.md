@@ -1,7 +1,7 @@
 ---
 title: "[Lesson 2: Practical Page](https://github.com/stri-con/dc-single/blob/master/index.Rmd)"
 author: "by Jarrod"
-date: "17 May, 2020"
+date: "02 June, 2020"
 smart: true
 output:
   html_document:
@@ -1712,10 +1712,18 @@ Limited color palettes like these force us to be more careful when deciding what
 </tbody>
 </table>
 
+If you want to create your own color palette (say based on Wong's colors) you would write the code like this. Then you could pass the character string `wong_pal` to any place you need a color palette.
+
+
+```r
+wong_pal <- c("#009E73", "#D55E00", "#F0E442",
+                "#CC79A7", "#56B4E9", "#E69F00",
+                "#0072B2", "#7F7F7F", "#000000")
+```
+
 Here is another great article on [Coloring for Colorblindness](https://davidmathlogic.com/colorblind/#%23000000-%23E69F00-%2356B4E9-%23009E73-%23F0E442-%230072B2-%23D55E00-%23CC79A7) by David Nichols that has an interactive color picker and recommendations for accessible palettes. 
 
 Remember, these are *only suggestions*. Ultimately, it is your choice how to use color and what palettes work best for you needs, I am merely offering some food for thought. Again, color and figure design are very broad---I encourage you to spend some time exploring these topics in more depth with the reference I provided. See where it takes you.  
-
 
 
 
